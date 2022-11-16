@@ -9,11 +9,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import dataAccessLayer.WordDAO;
+import transferObject.TransferContent;
+
 public class ReaderXML {
 	
 	private String title;
 	private String author;
-	private String content;
+	private String contentInFile;
 	private ArrayList<String> words = new ArrayList<String>();
 	
 	private ArrayList<String> getWords(String content){
@@ -27,7 +30,7 @@ public class ReaderXML {
 	}
 
 	// Reading XML File
-	private void readFile(File file)
+	public void readFile(File file)
 	{
 		try {  
 			
@@ -53,9 +56,9 @@ public class ReaderXML {
 			if(aElement != null){
 				author = author.replaceAll("(?U)[\\W_]+", " ");
 			}
-			content = cElement.getTextContent();
+			contentInFile = cElement.getTextContent();
 			if(cElement != null){
-				content = content.replaceAll("(?U)[\\W_]+", " ");
+				contentInFile = contentInFile.replaceAll("(?U)[\\W_]+", " ");
 			}
 
 		
@@ -65,4 +68,21 @@ public class ReaderXML {
 			System.out.println("Error in Reading XML file");  
 		} 
 	}
+	
+	
+	public TransferContent getContent() {
+		TransferContent content = new TransferContent();
+		content.setTitle(this.title);
+		content.setAuthor(this.author);
+		content.setContent(this.contentInFile);
+		content.setWords(this.words);
+		return content;
+	}
+	
+	public static void main(String[] args) {
+		ReaderXML rd = new ReaderXML();
+		WordDAO wd = new WordDAO();
+		wd.insertContent();
+	}
+	
 }
