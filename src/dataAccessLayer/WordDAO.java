@@ -19,10 +19,11 @@ public class WordDAO {
 	
 	String url = "jdbc:mysql://localhost:3307/content?useSSL=false";
     String user = "root";
-    String password = "Rem@950";
+    String password = "Rem@9500";
     
     public void insertContent() {
-    	readerXML.readFile(new File("C:\\Users\\Z\\Downloads\\text\\0001.xml"));
+    	readerXML.readFile(new File("C:\\Users\\Z\\Downloads\\0001.xml"));
+    	
     	TransferContent contents = readerXML.getContent();
     	String query = "INSERT INTO `content` (Title, Author, content) VALUE ('" + contents.getTitle() + "' ,'" + contents.getAuthor() + "','" + contents.getContent() + "')";
     	
@@ -34,5 +35,30 @@ public class WordDAO {
          } catch (SQLException ex) {
              System.out.println(ex.getMessage());
          }
+    }
+    public void insertWords() {
+    	Connection con = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+    	readerXML.readFile(new File("C:\\Users\\Z\\Downloads\\0001.xml"));
+    	
+    	TransferContent contents = readerXML.getContent();
+    	for(String key : contents.getWords().keySet() ) {
+    		String query = "INSERT INTO `Words` (word, frequency, title) VALUE ('" + key + "' ," + contents.getWords().get(key) + ",'" + contents.getTitle() + "')";
+    	
+    		try {
+    			Statement st = con.createStatement();
+    			st.executeUpdate(query);
+
+    		} catch (SQLException ex) {
+    			System.out.println(ex.getMessage());
+    		}
+    	}
     }
 }

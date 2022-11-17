@@ -2,6 +2,7 @@ package buisnessLayer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,13 +18,17 @@ public class ReaderXML {
 	private String title;
 	private String author;
 	private String contentInFile;
-	private ArrayList<String> words = new ArrayList<String>();
+	//private ArrayList<String> words = new ArrayList<String>();
+	private HashMap<String, Integer> words = new HashMap<String,Integer>();
 	
-	private ArrayList<String> getWords(String content){
+	public HashMap<String, Integer> getWords(String content){
 		
 		// Using split function.
         for (String word: content.split(" ")) {
-        	words.add(word);
+        	if(!words.containsKey(word))
+        		words.put(word, 1);
+        	else
+        		words.put(word,words.get(word) + 1);
         }
 		
 		return words;
@@ -59,6 +64,7 @@ public class ReaderXML {
 			contentInFile = cElement.getTextContent();
 			if(cElement != null){
 				contentInFile = contentInFile.replaceAll("(?U)[\\W_]+", " ");
+				getWords(contentInFile);
 			}
 
 		
@@ -83,6 +89,7 @@ public class ReaderXML {
 		ReaderXML rd = new ReaderXML();
 		WordDAO wd = new WordDAO();
 		wd.insertContent();
+		wd.insertWords();
 	}
 	
 }

@@ -1,13 +1,14 @@
 package transferObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TransferContent {
 
 	private String title;
 	private String author;
 	private String content;
-	private ArrayList<String> words = new ArrayList<String>();
+	private HashMap<String,Integer> words = new HashMap<String,Integer>();
 	public String getTitle() {
 		return title;
 	}
@@ -26,10 +27,10 @@ public class TransferContent {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public ArrayList<String> getWords() {
+	public HashMap<String,Integer> getWords() {
 		return words;
 	}
-	public void setWords(ArrayList<String> words) {
+	public void setWords(HashMap<String,Integer> words) {
 		this.words = words;
 	}
 	
