@@ -10,6 +10,7 @@ import org.w3c.dom.*;
 
 import buisnessLayer.ReaderXML;
 import transferObject.TransferContent;
+import transferObject.Words;
 
 
 
@@ -21,9 +22,9 @@ public class WordDAO {
 		readerXML = new ReaderXML();
 	}
 	
-	String url = "jdbc:mysql://localhost:3306/content?useSSL=false";
+	String url = "jdbc:mysql://localhost:3307/content?useSSL=false";
     String user = "root";
-    String password = "Rem@9500";
+    String password = "";
     
     // Insert data into content table ( title , author , content in file )
     public void insertContent(File file, Connection con) {
@@ -108,4 +109,34 @@ public class WordDAO {
     	// insert words into DB
     	insertWords(con);
     }
+    
+    /*
+     * 		Author Absar Ali ( 20F-0232 ) 
+     * 		Function : getAllWords()
+     * 		Return Words and frequency from Database
+     */
+    
+    public Words getAllWords() {
+		
+        String query = "SELECT word , frequency FROM `Words`";
+
+        Words words = new Words();
+      
+        
+        try {
+        	Connection con = DriverManager.getConnection(url, user, password);
+        	Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+            	
+            	
+            	words.put(rs.getString(0),Integer.parseInt(rs.getString(1)));
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return words;
+	}
 }
