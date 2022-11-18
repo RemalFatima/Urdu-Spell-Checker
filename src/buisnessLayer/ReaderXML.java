@@ -18,15 +18,19 @@ public class ReaderXML {
 	private String title;
 	private String author;
 	private String contentInFile;
-	//private ArrayList<String> words = new ArrayList<String>();
+	
+	//Hashmap to store words 
 	private HashMap<String, Integer> words = new HashMap<String,Integer>();
+	private HashMap<String,String> wordForeignKey = new HashMap<String,String>();
 	
 	public HashMap<String, Integer> getWords(String content){
 		
 		// Using split function.
         for (String word: content.split(" ")) {
-        	if(!words.containsKey(word))
+        	if(!(words.containsKey(word) || word == " ")) {
         		words.put(word, 1);
+        		wordForeignKey.put(word, title);
+        	}
         	else
         		words.put(word,words.get(word) + 1);
         }
@@ -35,7 +39,7 @@ public class ReaderXML {
 	}
 
 	// Reading XML File
-	public void readFile(File file)
+	public boolean readFile(File file)
 	{
 		try {  
 			
@@ -50,7 +54,9 @@ public class ReaderXML {
 			// Reading tags and their value
 			Element tElement = (Element) doc.getElementsByTagName("title").item(0);
 			Element aElement = (Element) doc.getElementsByTagName("author").item(0);
-			Element cElement = (Element) doc.getElementsByTagName("section").item(0);
+			Element cElement = (Element) doc.getElementsByTagName("body").item(0);
+			cElement.removeAttribute("annotation");
+			aElement.removeAttribute("gender");
 			
 			// assigning value in tags to variables
 			title =  tElement.getTextContent(); 
@@ -64,6 +70,12 @@ public class ReaderXML {
 			contentInFile = cElement.getTextContent();
 			if(cElement != null){
 				contentInFile = contentInFile.replaceAll("(?U)[\\W_]+", " ");
+				contentInFile = contentInFile.replaceAll("[a-zA-Z]", " ");
+				contentInFile = contentInFile.replaceAll("[0-9]", " ");
+				contentInFile = contentInFile.replaceAll("[áéóؐ]", " ");
+				contentInFile = contentInFile.replaceAll("\\d.", " ");
+				
+				
 				getWords(contentInFile);
 			}
 
@@ -72,24 +84,27 @@ public class ReaderXML {
 		catch (Exception e)   
 		{  
 			System.out.println("Error in Reading XML file");  
+			return false;
 		} 
+		return true;
 	}
 	
-	
+	 
+	// Return content
 	public TransferContent getContent() {
 		TransferContent content = new TransferContent();
 		content.setTitle(this.title);
 		content.setAuthor(this.author);
 		content.setContent(this.contentInFile);
 		content.setWords(this.words);
+		content.setWordForeignKey(this.wordForeignKey);
 		return content;
 	}
 	
 	public static void main(String[] args) {
 		ReaderXML rd = new ReaderXML();
 		WordDAO wd = new WordDAO();
-		wd.insertContent();
-		wd.insertWords();
+		wd.insertData("C:\\Users\\Z\\OneDrive\\Documents\\5th Semester\\SCD Course\\Project\\files");
 	}
 	
 }

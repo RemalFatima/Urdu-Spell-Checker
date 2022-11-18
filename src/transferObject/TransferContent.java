@@ -3,12 +3,22 @@ package transferObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+//Transfer Content between business layer and data access layer
 public class TransferContent {
 
 	private String title;
 	private String author;
 	private String content;
 	private HashMap<String,Integer> words = new HashMap<String,Integer>();
+	private HashMap<String,String> wordForeignKey = new HashMap<String,String>();
+	
+	public HashMap<String, String> getWordForeignKey() {
+		return wordForeignKey;
+	}
+	public void setWordForeignKey(HashMap<String, String> wordForeignKey) {
+		this.wordForeignKey = wordForeignKey;
+	}
 	public String getTitle() {
 		return title;
 	}
