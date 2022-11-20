@@ -19,24 +19,9 @@ public class ReaderXML {
 	private String author;
 	private String contentInFile;
 	
-	//Hashmap to store words 
-	private HashMap<String, Integer> words = new HashMap<String,Integer>();
-	private HashMap<String,String> wordForeignKey = new HashMap<String,String>();
+
 	
-	public HashMap<String, Integer> getWords(String content){
-		
-		// Using split function.
-        for (String word: content.split(" ")) {
-        	if(!(words.containsKey(word) || word == " ")) {
-        		words.put(word, 1);
-        		wordForeignKey.put(word, title);
-        	}
-        	else
-        		words.put(word,words.get(word) + 1);
-        }
-		
-		return words;
-	}
+
 
 	// Reading XML File
 	public boolean readFile(File file)
@@ -73,17 +58,17 @@ public class ReaderXML {
 				contentInFile = contentInFile.replaceAll("[a-zA-Z]", " ");
 				contentInFile = contentInFile.replaceAll("[0-9]", " ");
 				contentInFile = contentInFile.replaceAll("[áéóؐ]", " ");
-				contentInFile = contentInFile.replaceAll("\\d.", " ");
 				
 				
-				getWords(contentInFile);
+				
+			
 			}
 
 		
 		}   
 		catch (Exception e)   
 		{  
-			System.out.println("Error in Reading XML file");  
+			System.out.println("Error in Reading XML file in " + file.getName());  
 			return false;
 		} 
 		return true;
@@ -96,15 +81,9 @@ public class ReaderXML {
 		content.setTitle(this.title);
 		content.setAuthor(this.author);
 		content.setContent(this.contentInFile);
-		content.setWords(this.words);
-		content.setWordForeignKey(this.wordForeignKey);
 		return content;
 	}
 	
-	public static void main(String[] args) {
-		ReaderXML rd = new ReaderXML();
-		WordDAO wd = new WordDAO();
-		wd.insertData("C:\\Users\\Z\\OneDrive\\Documents\\5th Semester\\SCD Course\\Project\\files");
-	}
+
 	
 }
