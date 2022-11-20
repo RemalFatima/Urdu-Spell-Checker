@@ -31,6 +31,47 @@ public class Mainscreen extends JFrame {
 	private JPanel contentPane;
 	private JTextPane textArea = new JTextPane();
 
+     // Highlight incorrect words from JTextPane by deleting old text and overwriting with new text
+
+	public void highlight() {
+		//textArea.setText(  "  یہ خُون میں آکسیجَن کو مِلاتا ہے جِس   "); 
+		String oldSentence = textArea.getText();
+		oldSentence = oldSentence.replaceAll("(?U)[\\W_]+", " ");
+		
+		Corrector corrector = new Corrector();
+		ArrayList<String> correctWords = new ArrayList<String>();
+		correctWords = corrector.correctWords(oldSentence);
+		ArrayList<String> incorrectWords = new ArrayList<String>();
+		incorrectWords =  corrector.Incorrectwords(oldSentence);
+		textArea.setText("");
+		for(String word : oldSentence.split(" ")) {
+			if(incorrectWords.contains(word))
+				appendToPane(textArea, word, Color.red);
+			else
+				appendToPane(textArea,word,Color.black);
+			appendToPane(textArea," ", Color.black);
+		}
+		
+		
+	}
+		/*
+		 * append new text 
+		 */
+		private void appendToPane(JTextPane tp, String msg, Color c)
+	    {
+	        StyleContext sc = StyleContext.getDefaultStyleContext();
+	        AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
+
+	        aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Lucida Console");
+	        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+
+	        int len = tp.getDocument().getLength();
+	        tp.setCaretPosition(len);
+	        tp.setCharacterAttributes(aset, false);
+	        tp.replaceSelection(msg);
+	        
+	    }
+
 	/**
 	 * Launch the application.
 	 */
@@ -40,7 +81,8 @@ public class Mainscreen extends JFrame {
 				try {
 					Mainscreen frame = new Mainscreen();
 					frame.setVisible(true);
-									} catch (Exception e) {
+					frame.highlight();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -60,7 +102,7 @@ public class Mainscreen extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		textArea.setForeground(Color.black);
+		textArea.setForeground(Color.CYAN);
 		
 		
 		textArea.setBounds(0, 67, 434, 194);
@@ -69,14 +111,18 @@ public class Mainscreen extends JFrame {
 		JButton checkBtn = new JButton("چیک کریں");
 		checkBtn.setForeground(Color.BLACK);
 		checkBtn.setBackground(SystemColor.inactiveCaption);
-		
+		checkBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				highlight();
+			}
+		});
 		checkBtn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		checkBtn.setBounds(10, 27, 114, 32);
 		contentPane.add(checkBtn);
 		
 		JLabel lblNewLabel = new JLabel("اپنا متن یہاں درج کریں: ");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBackground(Color.black);
+		lblNewLabel.setBackground(Color.CYAN);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel.setBounds(230, 30, 194, 25);
 		contentPane.add(lblNewLabel);
