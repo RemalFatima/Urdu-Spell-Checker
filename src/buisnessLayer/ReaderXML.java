@@ -35,23 +35,27 @@ public class ReaderXML {
 			DocumentBuilder db = dbf.newDocumentBuilder();  
 			Document doc = db.parse(file);  
 			doc.getDocumentElement().normalize();  
-			
+			Element aElement;
 			// Reading tags and their value
 			Element tElement = (Element) doc.getElementsByTagName("title").item(0);
-			Element aElement = (Element) doc.getElementsByTagName("author").item(0);
-			Element cElement = (Element) doc.getElementsByTagName("body").item(0);
-			cElement.removeAttribute("annotation");
-			aElement.removeAttribute("gender");
 			
+			aElement = (Element) doc.getElementsByTagName("author").item(0);
+			
+			Element cElement = (Element) doc.getElementsByTagName("document").item(0);
+	
 			// assigning value in tags to variables
 			title =  tElement.getTextContent(); 
 			if(tElement != null){
 				title = title.replaceAll("(?U)[\\W_]+", " "); // Removing Punctuation marks
 			}
+			if(aElement != null) {
 			author = aElement.getTextContent();
-			if(aElement != null){
-				author = author.replaceAll("(?U)[\\W_]+", " ");
+			author = author.replaceAll("(?U)[\\W_]+", " ");
+			author = author.replaceAll("[a-zA-Z]", " ");
+			
 			}
+			else
+				author = "No Author";
 			contentInFile = cElement.getTextContent();
 			if(cElement != null){
 				contentInFile = contentInFile.replaceAll("(?U)[\\W_]+", " ");
@@ -69,6 +73,8 @@ public class ReaderXML {
 		catch (Exception e)   
 		{  
 			System.out.println("Error in Reading XML file in " + file.getName());  
+			System.out.println(e.getMessage());  
+			
 			return false;
 		} 
 		return true;
