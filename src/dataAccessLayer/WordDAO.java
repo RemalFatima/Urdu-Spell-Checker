@@ -193,9 +193,9 @@ public class WordDAO {
         return words;
 	}
     
-    public static void main(String[] args) {
-    	WordDAO wd = new WordDAO();
-    	//wd.insertData("C:\\Users\\Hp\\Downloads\\makhzan-master\\makhzan-master\\text");
-    	wd.returnContent();
-    }
+  //  public static void main(String[] args) {
+ //   	WordDAO wd = new WordDAO();
+ //   	//wd.insertData("C:\\Users\\Hp\\Downloads\\makhzan-master\\makhzan-master\\text");
+ //   	wd.returnContent();
+ //   }
 }
