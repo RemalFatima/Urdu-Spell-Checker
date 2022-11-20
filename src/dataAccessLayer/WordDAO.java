@@ -28,7 +28,7 @@ public class WordDAO {
 		readerXML = new ReaderXML();
 	}
 	
-	String url = "jdbc:mysql://localhost:3307/content?useSSL=false";
+	String url = "jdbc:mysql://localhost:3306/content?useSSL=false";
     String user = "root";
     String password = "";
     
@@ -193,9 +193,9 @@ public class WordDAO {
         return words;
 	}
     
-  //  public static void main(String[] args) {
- //   	WordDAO wd = new WordDAO();
- //   	//wd.insertData("C:\\Users\\Hp\\Downloads\\makhzan-master\\makhzan-master\\text");
- //   	wd.returnContent();
- //   }
+    public static void main(String[] args) {
+ 	WordDAO wd = new WordDAO();
+ 	wd.insertData("D:\\text");
+ 	wd.returnContent();
+ }
 }
