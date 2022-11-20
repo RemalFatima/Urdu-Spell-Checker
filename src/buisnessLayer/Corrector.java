@@ -32,5 +32,20 @@ public ArrayList<String> Incorrectwords(String sentence)
 	}
 	return incorrectWords;
 }
-
+/*
+ * stores correct words into an array list and return that list 
+ */
+public ArrayList<String> correctWords(String sentence)
+{
+	
+	words = wordDao.getAllWords();
+	ArrayList<String> correctWords = new ArrayList<String>();
+	for(String word : sentence.split(" ")) {
+		if(words.getWords().containsKey(word))
+		{
+			correctWords.add(word);	
+					}
+	}
+	return correctWords;
+}
 }
