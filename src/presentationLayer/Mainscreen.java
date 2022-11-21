@@ -22,6 +22,9 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
+import javax.swing.JLayeredPane;
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
 
 /*
  * @Author: ManalSaqib 20F-0141 
@@ -101,23 +104,28 @@ public class Mainscreen extends JFrame {
 		setTitle("Urdu Spell Checler");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 514, 359);
+		setBounds(100, 100, 895, 499);
 		contentPane = new JPanel();
 		contentPane.setForeground(Color.DARK_GRAY);
-		contentPane.setBackground(new Color(117, 117, 117));
+		contentPane.setBackground(new Color(56, 74, 107));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		textArea.setBackground(new Color(63, 63, 63));
-		textArea.setForeground(Color.WHITE);
 		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBorder(null);
+		tabbedPane.setBounds(281, 0, 598, 460);
+		contentPane.add(tabbedPane);
 		
-		textArea.setBounds(0, 126, 498, 194);
-		contentPane.add(textArea);
-		textArea.setCaretColor(Color.white);
+		JPanel spellCheckPanel = new JPanel();
+		spellCheckPanel.setBackground(new Color(60, 81, 115));
+		tabbedPane.addTab("Spell Checker", null, spellCheckPanel, null);
+		spellCheckPanel.setLayout(null);
 		
 		JButton checkBtn = new JButton("چیک کریں");
+		checkBtn.setBounds(10, 129, 136, 42);
+		spellCheckPanel.add(checkBtn);
 		checkBtn.setForeground(Color.DARK_GRAY);
 		checkBtn.setBackground(new Color(192, 192, 192));
 		checkBtn.addActionListener(new ActionListener() {
@@ -125,34 +133,94 @@ public class Mainscreen extends JFrame {
 				highlight();
 			}
 		});
-		checkBtn.setFont(new Font("Tahoma", Font.BOLD, 13));
-		checkBtn.setBounds(10, 83, 114, 32);
-		contentPane.add(checkBtn);
+		checkBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
+		textArea.setBounds(0, 182, 593, 250);
+		spellCheckPanel.add(textArea);
+		textArea.setBackground(new Color(34, 46, 66));
+		textArea.setForeground(Color.WHITE);
+		textArea.setCaretColor(Color.white);
 		
 		JLabel lblNewLabel = new JLabel("اپنا متن یہاں درج کریں: ");
+		lblNewLabel.setBounds(388, 145, 195, 25);
+		spellCheckPanel.add(lblNewLabel);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBackground(Color.CYAN);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel.setBounds(336, 90, 162, 25);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		JButton importBtn = new JButton("بلٹ ان ڈیٹا درآمد کریں");
-		importBtn.setForeground(Color.DARK_GRAY);
-		importBtn.setFont(new Font("Tahoma", Font.BOLD, 13));
-		importBtn.setBackground(Color.LIGHT_GRAY);
-		importBtn.setBounds(315, 11, 173, 25);
-		contentPane.add(importBtn);
+		JPanel importPanel = new JPanel();
+		tabbedPane.addTab("New tab", null, importPanel, null);
 		
-		JButton addWordBtn = new JButton("نیا لفظ شامل کریں");
-		addWordBtn.setForeground(Color.DARK_GRAY);
-		addWordBtn.setFont(new Font("Tahoma", Font.BOLD, 13));
-		addWordBtn.setBackground(Color.LIGHT_GRAY);
-		addWordBtn.setBounds(160, 13, 145, 25);
-		contentPane.add(addWordBtn);
+		JPanel panel_2 = new JPanel();
+		tabbedPane.addTab("New tab", null, panel_2, null);
 		
-		JLabel lblNewLabel_1 = new JLabel("___________________________________________________________________________________");
+		JPanel sidePanel = new JPanel();
+		sidePanel.setBackground(new Color(96, 210, 196));
+		sidePanel.setBounds(0, 0, 280, 460);
+		contentPane.add(sidePanel);
+		sidePanel.setLayout(null);
+		
+		JLabel logo = new JLabel("");
+		logo.setIcon(new ImageIcon(Mainscreen.class.getResource("/images/cooltext423951303068138 (1).png")));
+		logo.setBounds(0, 11, 260, 67);
+		sidePanel.add(logo);
+		
+		JLabel lblNewLabel_1 = new JLabel("____________________________");
+		lblNewLabel_1.setBackground(Color.WHITE);
 		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setBounds(0, 47, 498, 14);
-		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1.setBounds(10, 89, 260, 24);
+		sidePanel.add(lblNewLabel_1);
+		
+		JButton spellCheckerBtn = new JButton("اردو املا کی اصلاح");
+		spellCheckerBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.setSelectedIndex(0);
+			}
+			
+			
+		});
+		spellCheckerBtn.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		spellCheckerBtn.setForeground(Color.BLACK);
+		spellCheckerBtn.setBackground(Color.LIGHT_GRAY);
+		spellCheckerBtn.setBounds(13, 134, 247, 55);
+		sidePanel.add(spellCheckerBtn);
+		
+		JButton importBtn = new JButton("بلٹ ورڈز درآمد کریں");
+		importBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.setSelectedIndex(1);
+			}
+		});
+		importBtn.setForeground(Color.BLACK);
+		importBtn.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		importBtn.setBackground(Color.LIGHT_GRAY);
+		importBtn.setBounds(13, 245, 247, 55);
+		sidePanel.add(importBtn);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("____________________________");
+		lblNewLabel_1_1.setForeground(Color.WHITE);
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1_1.setBackground(Color.WHITE);
+		lblNewLabel_1_1.setBounds(10, 200, 260, 24);
+		sidePanel.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("____________________________");
+		lblNewLabel_1_1_1.setForeground(Color.WHITE);
+		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1_1_1.setBackground(Color.WHITE);
+		lblNewLabel_1_1_1.setBounds(10, 311, 260, 24);
+		sidePanel.add(lblNewLabel_1_1_1);
+		
+		JButton spellCheckerBtn_1_1 = new JButton("نیا لفظ درج کریں");
+		spellCheckerBtn_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.setSelectedIndex(2);
+			}
+		});
+		spellCheckerBtn_1_1.setForeground(Color.BLACK);
+		spellCheckerBtn_1_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		spellCheckerBtn_1_1.setBackground(Color.LIGHT_GRAY);
+		spellCheckerBtn_1_1.setBounds(13, 356, 247, 55);
+		sidePanel.add(spellCheckerBtn_1_1);
 	}
 }
