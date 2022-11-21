@@ -9,6 +9,7 @@ import java.util.List;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
+import buisnessLayer.MutantGenerator;
 import buisnessLayer.ReaderXML;
 import transferObject.*;
 
@@ -193,9 +194,36 @@ public class WordDAO {
         return words;
 	}
     
-    public static void main(String[] args) {
- 	WordDAO wd = new WordDAO();
- 	wd.insertData("D:\\text");
- 	wd.returnContent();
- }
+    
+    /*
+     * Author Absar Ali ( 20F-0232)
+     * Function to insert mutant into database
+     */
+ public void insertMutants() {
+    	
+    	MutantGenerator mutantGenerator = new MutantGenerator();
+    	Mutants mutants = mutantGenerator.generateMutants();
+    	String query ;
+    	Connection con = null;
+    	try {
+			con = DriverManager.getConnection(url, user, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	for(String key : mutants.getMutant().keySet()) {
+			try {
+				
+				Statement st = con.createStatement();
+				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key + "' ,'" + mutants.getMutant().get(key) + "')";
+				st.executeUpdate(query);
+				
+			} catch (SQLException e) {
+				
+				System.out.println(e.getMessage());
+			}
+    	}
+    }
+   
 }
