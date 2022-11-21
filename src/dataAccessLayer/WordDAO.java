@@ -29,7 +29,7 @@ public class WordDAO {
 		readerXML = new ReaderXML();
 	}
 	
-	String url = "jdbc:mysql://localhost:3306/content?useSSL=false";
+	String url = "jdbc:mysql://localhost:3307/content?useSSL=false";
     String user = "root";
     String password = "";
     
@@ -202,7 +202,7 @@ public class WordDAO {
  public void insertMutants() {
     	
     	MutantGenerator mutantGenerator = new MutantGenerator();
-    	Mutants mutants = mutantGenerator.generateMutants();
+    	Mutants mutants = mutantGenerator.generateMutants(getAllWords());
     	String query ;
     	Connection con = null;
     	try {

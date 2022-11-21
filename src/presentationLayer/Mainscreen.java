@@ -49,8 +49,9 @@ public class Mainscreen extends JFrame {
 				appendToPane(textArea, word, Color.red);
 			else
 				appendToPane(textArea,word,Color.black);
-			appendToPane(textArea," ", Color.black);
+			appendToPane(textArea,"  ", Color.black);
 		}
+		appendToPane(textArea," ", Color.black);
 		
 		
 	}

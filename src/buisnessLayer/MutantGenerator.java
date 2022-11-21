@@ -22,9 +22,9 @@ public class MutantGenerator {
 	}
 	
 	// Create Mutants 
-	public Mutants generateMutants() {
+	public Mutants generateMutants(Words _wordsList) {
 		
-		Words words = wordDAO.getAllWords();
+		Words words = _wordsList;
 		Mutants mutants = new Mutants();
 		HashMap<String, String> mutantList = new HashMap<String,String>();
 		
