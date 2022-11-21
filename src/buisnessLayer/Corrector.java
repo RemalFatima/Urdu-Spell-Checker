@@ -44,7 +44,7 @@ public ArrayList<String> correctWords(String sentence)
 		if(words.getWords().containsKey(word))
 		{
 			correctWords.add(word);	
-					}
+	    }
 	}
 	return correctWords;
 }
