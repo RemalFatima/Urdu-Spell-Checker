@@ -195,35 +195,6 @@ public class WordDAO {
 	}
     
     
-    /*
-     * Author Absar Ali ( 20F-0232)
-     * Function to insert mutant into database
-     */
- public void insertMutants() {
-    	
-    	MutantGenerator mutantGenerator = new MutantGenerator();
-    	Mutants mutants = mutantGenerator.generateMutants(getAllWords());
-    	String query ;
-    	Connection con = null;
-    	try {
-			con = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	for(String key : mutants.getMutant().keySet()) {
-			try {
-				
-				Statement st = con.createStatement();
-				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key + "' ,'" + mutants.getMutant().get(key) + "')";
-				st.executeUpdate(query);
-				
-			} catch (SQLException e) {
-				
-				System.out.println(e.getMessage());
-			}
-    	}
-    }
+   
    
 }
