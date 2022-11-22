@@ -207,6 +207,7 @@ public class Mainscreen extends JFrame {
 					DataInserter dataInserter = new DataInserter();
 					dataInserter.insertManualWord(userNameTextField.getText(), WordTextField.getText());
 					dataInserter.insertManualMutants(WordTextField.getText());
+
 				}
 			}
 		});
