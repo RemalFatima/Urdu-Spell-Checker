@@ -27,6 +27,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 
 /*
  * @Author: ManalSaqib 20F-0141 
@@ -170,11 +171,15 @@ public class Mainscreen extends JFrame {
 		xmlPathLbl.setBounds(259, 162, 324, 38);
 		importPanel.add(xmlPathLbl);
 		
+		JCheckBox wordRefChkBtn = new JCheckBox("insert word references");
+		wordRefChkBtn.setBounds(10, 173, 140, 23);
+		importPanel.add(wordRefChkBtn);
+		
 		JButton btnNewButton = new JButton("داخل کریں۔");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DataInserter dataInserter = new DataInserter();
-				dataInserter.insertBuiltInData(xmlDataPathTextField.getText());
+				dataInserter.insertBuiltInData(xmlDataPathTextField.getText(), wordRefChkBtn.isSelected() );
 				MutantGenerator mutantGenerator = new MutantGenerator();
 				WordDAO wordDAO = new WordDAO();
 				mutantGenerator.generateMutants(wordDAO.getAllWords());
@@ -183,6 +188,8 @@ public class Mainscreen extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		btnNewButton.setBounds(223, 265, 124, 38);
 		importPanel.add(btnNewButton);
+		
+		
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(34, 46, 66));

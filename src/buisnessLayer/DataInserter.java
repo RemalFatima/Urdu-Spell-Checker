@@ -14,8 +14,10 @@ public class DataInserter {
 	}
 	
 	
-	public void insertBuiltInData(String path) {
+	public void insertBuiltInData(String path,boolean wordRefEnter) {
 		wordDAO.insertBuiltInData(path);
+		if(wordRefEnter)
+			wordDAO.insertWordRef();
 		mutantDAO.insertBuiltInMutants();
 		
 	}
