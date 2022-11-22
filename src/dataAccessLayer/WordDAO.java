@@ -59,7 +59,7 @@ public class WordDAO {
 		
 		// Using split function.
         for (String word: content.split(" ")) {
-        	if(!(words.containsKey(word) || word == " ")) {
+        	if(!(words.containsKey(word) || wordForeignKey.containsKey(word))) {
         		words.put(word, 1);
         		wordForeignKey.put(word, title);
         	}
@@ -75,7 +75,7 @@ public class WordDAO {
     // Author  : Remal Fatima
     // Insert word into Words table ( word , frequency , title of file where found first )
    	
-    public void returnContent() {
+    public void insertWords() {
     	
     	String query = "Delete From `Words`";
     	Connection con = null;
@@ -94,8 +94,8 @@ public class WordDAO {
             	title = rs.getString(1);
             	content = rs.getString(3);
             	getWords(content,title);
-
             }
+            rs.close();
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -113,8 +113,6 @@ public class WordDAO {
     		try {
 			
 				Statement st = con.createStatement();
-//				query = "INSERT INTO `WordReference` (word, FileName) VALUES ('" + key + "' ,'" + wordForeignKey.get(key) + "')";
-
 				if(!word.getWords().containsKey(key) ) {
 				
 					query = "INSERT INTO `Words` (word, frequency) VALUE ('" + key + "' ," + words.get(key) + ")";
@@ -135,13 +133,56 @@ public class WordDAO {
     	
     }
     
+public void insertWordRef() {
+    	
+    	String query ;
+    	Connection con = null;
+    	String content;
+    	String title;
+    	
+    	try {
+        	con = DriverManager.getConnection(url, user, password);
+        	Statement st = con.createStatement();
+        	//st.execute(query);
+        	query = "Select * from `Content`";
+            ResultSet rs = st.executeQuery(query);
+            wordForeignKey.clear();
+            while (rs.next()) {
+        
+            	title = rs.getString(1);
+            	content = rs.getString(3);
+            	for(String word : content.split(" "))
+            	{
+            		if(!wordForeignKey.containsKey(word))
+            			wordForeignKey.put(word, title);
+            	}
+            	wordForeignKey.remove("");
+            	for(String key : wordForeignKey.keySet()) {
+            		try {
+            			Statement st2 = con.createStatement();
+            			query = "INSERT INTO `WordReference` (word, FileName) VALUE ('" + key + "' ,'" + wordForeignKey.get(key) + "')";
+            			st2.executeUpdate(query);
+            		} catch (SQLException ex) {
+            			System.out.println(ex.getMessage());
+            		}
+            	}
+            	wordForeignKey.clear();
+            	
+            }
+           
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
  
     
     // Author  : Remal Fatima
     // Insert Both content and words into database
     // Arguements take path of folder where file is located
     
-    public void insertData(String path) {
+    public void insertBuiltInData(String path) {
     	
     	File folder = new File(path);
     	Connection con = null;
@@ -156,11 +197,13 @@ public class WordDAO {
 		// Insert content ( title , author , content in file ) 
     	for ( File file : folder.listFiles()) {
             
-    		insertContent(file,con);
+    		//insertContent(file,con);
+    		
     		
         }
-    	// insert words into DB
-    	//insertWords(con);
+    	//insertWords();
+    	insertWordRef();
+    	
     }
     
     

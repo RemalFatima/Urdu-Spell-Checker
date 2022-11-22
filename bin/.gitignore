@@ -1,5 +1,4 @@
-/TestCases/
-/buisnessLayer/
-/dataAccessLayer/
 /presentationLayer/
 /transferObject/
+/dataAccessLayer/
+/buisnessLayer/

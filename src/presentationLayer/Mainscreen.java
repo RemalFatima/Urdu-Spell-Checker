@@ -12,7 +12,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
-import buisnessLayer.Corrector;
+import buisnessLayer.*;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -25,6 +25,7 @@ import java.awt.SystemColor;
 import javax.swing.JLayeredPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
+import javax.swing.JTextField;
 
 /*
  * @Author: ManalSaqib 20F-0141 
@@ -38,6 +39,7 @@ public class Mainscreen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextPane textArea = new JTextPane();
+	private JTextField xmlDataPathTextField;
 
      // Highlight incorrect words from JTextPane by deleting old text and overwriting with new text
 
@@ -148,10 +150,36 @@ public class Mainscreen extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JPanel importPanel = new JPanel();
-		tabbedPane.addTab("New tab", null, importPanel, null);
+		importPanel.setBackground(new Color(34, 46, 66));
+		tabbedPane.addTab("Import Data", null, importPanel, null);
+		importPanel.setLayout(null);
+		
+		xmlDataPathTextField = new JTextField();
+		xmlDataPathTextField.setText("C:\\Users\\Hp\\Downloads\\makhzan-master\\makhzan-master\\text");
+		xmlDataPathTextField.setBackground(Color.LIGHT_GRAY);
+		xmlDataPathTextField.setBounds(10, 212, 573, 28);
+		importPanel.add(xmlDataPathTextField);
+		xmlDataPathTextField.setColumns(10);
+		
+		JLabel xmlPathLbl = new JLabel("ذیل میں XML فائلوں کا راستہ درج کریں:");
+		xmlPathLbl.setForeground(Color.WHITE);
+		xmlPathLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
+		xmlPathLbl.setBounds(259, 162, 324, 38);
+		importPanel.add(xmlPathLbl);
+		
+		JButton btnNewButton = new JButton("داخل کریں۔");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DataInserter dataInserter = new DataInserter();
+				dataInserter.insertBuiltInData(xmlDataPathTextField.getText());
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		btnNewButton.setBounds(223, 265, 124, 38);
+		importPanel.add(btnNewButton);
 		
 		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_2, null);
+		tabbedPane.addTab("Add Words", null, panel_2, null);
 		
 		JPanel sidePanel = new JPanel();
 		sidePanel.setBackground(new Color(96, 210, 196));
