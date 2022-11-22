@@ -13,6 +13,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import buisnessLayer.*;
+import dataAccessLayer.*;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -40,6 +41,8 @@ public class Mainscreen extends JFrame {
 	private JPanel contentPane;
 	private JTextPane textArea = new JTextPane();
 	private JTextField xmlDataPathTextField;
+	private JTextField userNameTextField;
+	private JTextField WordTextField;
 
      // Highlight incorrect words from JTextPane by deleting old text and overwriting with new text
 
@@ -172,6 +175,9 @@ public class Mainscreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DataInserter dataInserter = new DataInserter();
 				dataInserter.insertBuiltInData(xmlDataPathTextField.getText());
+				MutantGenerator mutantGenerator = new MutantGenerator();
+				WordDAO wordDAO = new WordDAO();
+				mutantGenerator.generateMutants(wordDAO.getAllWords());
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
@@ -179,7 +185,46 @@ public class Mainscreen extends JFrame {
 		importPanel.add(btnNewButton);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(34, 46, 66));
 		tabbedPane.addTab("Add Words", null, panel_2, null);
+		panel_2.setLayout(null);
+		
+		userNameTextField = new JTextField();
+		userNameTextField.setBounds(214, 138, 176, 34);
+		panel_2.add(userNameTextField);
+		userNameTextField.setColumns(10);
+		
+		WordTextField = new JTextField();
+		WordTextField.setColumns(10);
+		WordTextField.setBounds(214, 249, 176, 34);
+		panel_2.add(WordTextField);
+		
+		JButton addWordBtn = new JButton("لفظ شامل کریں۔");
+		addWordBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(WordTextField.getText() != "" && userNameTextField.getText() != "")
+				{
+					DataInserter dataInserter = new DataInserter();
+					dataInserter.insertManualWord(userNameTextField.getText(), WordTextField.getText());
+					dataInserter.insertManualMutants(WordTextField.getText());
+				}
+			}
+		});
+		addWordBtn.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		addWordBtn.setBounds(224, 367, 158, 40);
+		panel_2.add(addWordBtn);
+		
+		JLabel userNameLbl = new JLabel("اپنا نام درج کریں");
+		userNameLbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		userNameLbl.setForeground(Color.WHITE);
+		userNameLbl.setBounds(282, 93, 108, 34);
+		panel_2.add(userNameLbl);
+		
+		JLabel addWordLbl = new JLabel("اپنا لفظ درج کریں۔");
+		addWordLbl.setForeground(Color.WHITE);
+		addWordLbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		addWordLbl.setBounds(282, 204, 108, 34);
+		panel_2.add(addWordLbl);
 		
 		JPanel sidePanel = new JPanel();
 		sidePanel.setBackground(new Color(96, 210, 196));

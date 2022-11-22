@@ -26,7 +26,7 @@ public class MutantDAO {
      * Author Absar Ali ( 20F-0232)
      * Function to insert mutant into database
      */
- public void insertMutants() {
+    public void insertBuiltInMutants() {
     	WordDAO wordDAO = new WordDAO();
     	MutantGenerator mutantGenerator = new MutantGenerator();
     	Mutants mutants = mutantGenerator.generateMutants(wordDAO.getAllWords());
@@ -53,7 +53,42 @@ public class MutantDAO {
     	}
     }
  
- public Mutants getAllMutants() {
+    public boolean manualWordMutant(String word)
+    {
+    	Mutants mutants = new Mutants();
+    	Words words = new Words();
+    	words.put(word, 3);
+    	MutantGenerator mutantGenerator = new MutantGenerator();
+    	mutants = mutantGenerator.generateMutants(words);
+    	Connection con = null;
+    	String query = "INSERT INTO `Words` (word, frequency) VALUE ('" + word + "' ," + 1 + ")";
+    	
+    	try {
+			con = DriverManager.getConnection(url, user, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+    	
+    	for(String key : mutants.getMutant().keySet()) {
+			try {
+				
+				Statement st = con.createStatement();
+				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key + "' ,'" + mutants.getMutant().get(key) + "')";
+				st.executeUpdate(query);
+				
+			} catch (SQLException e) {
+				
+				System.out.println(e.getMessage());
+				return false;
+			}
+    	}
+    	
+    	return true;
+    }
+ 
+    public Mutants getAllMutants() {
 		
      String query = "SELECT * FROM `mutants`";
 

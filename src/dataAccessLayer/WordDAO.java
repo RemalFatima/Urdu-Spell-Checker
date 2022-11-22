@@ -197,11 +197,11 @@ public void insertWordRef() {
 		// Insert content ( title , author , content in file ) 
     	for ( File file : folder.listFiles()) {
             
-    		//insertContent(file,con);
+    		insertContent(file,con);
     		
     		
         }
-    	//insertWords();
+    	insertWords();
     	insertWordRef();
     	
     }
@@ -237,7 +237,30 @@ public void insertWordRef() {
         return words;
 	}
     
+    public boolean manualAddWords(String userName, String word)
+    {
+    	Words words = getAllWords();
+    	String query = "INSERT INTO `Words` (word, frequency) VALUE ('" + word + "' ," + 1 + ")";
+    	try {
+         	// execute query
+    		Connection con = DriverManager.getConnection(url, user, password);
+         	Statement st = con.createStatement();
+            st.executeUpdate(query);
+            Statement st2 = con.createStatement();
+			query = "INSERT INTO `WordReference` (word, FileName) VALUE ('" + word + "' ,'" + userName + "')";
+			st2.executeUpdate(query);
+            
+            
+
+         } catch (SQLException ex) {
+             System.out.println(ex.getMessage());
+             System.out.println("Error in inserting word` - Function manualAddWords in WordDAO");
+         }
+    	
+    	return true;
+    }
+    
     
    
-   
+  
 }
