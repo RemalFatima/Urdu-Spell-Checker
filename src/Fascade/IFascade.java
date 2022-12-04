@@ -36,4 +36,21 @@ public interface IFascade {
 	// Return content
 	Content getContent();
 
+	// insert built-in words mutant
+	void insertBuiltInMutants();
+
+	// insert mutants for manually added words
+	boolean manualWordMutant(String word);
+
+	// Return all mutants from database
+	Mutants getAllMutants();
+
+	void insertBuiltInData(String path);
+
+	Words getAllWords();
+
+	boolean manualAddWords(String userName, String word);
+	
+	void insertWordRef();
+
 }

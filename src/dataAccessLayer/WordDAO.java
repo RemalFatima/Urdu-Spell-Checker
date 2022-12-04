@@ -9,6 +9,8 @@ import java.util.List;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
+import Fascade.Fascade;
+import Fascade.IFascade;
 import buisnessLayer.IReaderXML;
 import buisnessLayer.MutantGenerator;
 import buisnessLayer.ReaderXML;
@@ -20,15 +22,13 @@ import transferObject.*;
 
 public class WordDAO implements IWordDAO {
 	
-	IReaderXML readerXML;
+	private IFascade bllFascade;
 	private HashMap<String, Integer> words = new HashMap<String,Integer>();
 	private HashMap<String,String> wordForeignKey = new HashMap<String,String>();
 	private ArrayList<String> content = new ArrayList<String>();
 	
 	
-	public WordDAO() {
-		readerXML = new ReaderXML();
-	}
+	
 	
 	String url = "jdbc:mysql://localhost:3307/content?useSSL=false";
     String user = "root";
@@ -38,11 +38,11 @@ public class WordDAO implements IWordDAO {
     // Author  : Remal Fatima
     @Override
 	public void insertContent(File file, Connection con) {
-    	
+    	bllFascade = new Fascade();
     	// Read File
-    	readerXML.readFile(file);
+    	bllFascade.readFile(file);
     	// Get content from file
-    	Content contents = readerXML.getContent();
+    	Content contents = bllFascade.getContent();
     	// query
     	String query = "INSERT INTO `Content` (Title, Author, content) VALUE ('" + contents.getTitle() + "' ,'" + contents.getAuthor() + "','" + contents.getContent() + "')";
     	

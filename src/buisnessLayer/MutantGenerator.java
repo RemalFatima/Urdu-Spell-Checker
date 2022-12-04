@@ -16,12 +16,6 @@ import transferObject.Words;
 
 public class MutantGenerator implements IMutantGenerator {
 	
-	IWordDAO wordDAO;
-	
-	public MutantGenerator() {
-		wordDAO = new WordDAO();
-		
-	}
 	
 	// Create Mutants 
 	@Override

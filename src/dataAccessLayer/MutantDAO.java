@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Fascade.Fascade;
+import Fascade.IFascade;
 import buisnessLayer.IMutantGenerator;
 import buisnessLayer.MutantGenerator;
 import transferObject.Mutants;
@@ -22,16 +24,19 @@ public class MutantDAO implements IMutantDAO {
 	String url = "jdbc:mysql://localhost:3307/content?useSSL=false";
     String user = "root";
     String password = "";
+    
+    private IFascade bllFascade;
 	 
     /*
      * Author Absar Ali ( 20F-0232)
      * Function to insert mutant into database
      */
+    
+    // insert mutants for builtin words
     @Override
 	public void insertBuiltInMutants() {
-    	IWordDAO wordDAO = new WordDAO();
-    	IMutantGenerator mutantGenerator = new MutantGenerator();
-    	Mutants mutants = mutantGenerator.generateMutants(wordDAO.getAllWords());
+    	bllFascade = new Fascade();
+    	Mutants mutants =  bllFascade.generateMutants(bllFascade.getAllWords());  //mutantGenerator.generateMutants(wordDAO.getAllWords());
     	String query ;
     	Connection con = null;
     	try {
@@ -54,15 +59,17 @@ public class MutantDAO implements IMutantDAO {
 			}
     	}
     }
+    
+    // generate mutants for manually added words
  
     @Override
 	public boolean manualWordMutant(String word)
     {
+    	bllFascade = new Fascade();
     	Mutants mutants = new Mutants();
     	Words words = new Words();
     	words.put(word, 3);
-    	IMutantGenerator mutantGenerator = new MutantGenerator();
-    	mutants = mutantGenerator.generateMutants(words);
+    	mutants = bllFascade.generateMutants(words);
     	Connection con = null;
     	String query = "INSERT INTO `Words` (word, frequency) VALUE ('" + word + "' ," + 1 + ")";
     	
@@ -91,6 +98,7 @@ public class MutantDAO implements IMutantDAO {
     	return true;
     }
  
+    // Get all mutants from database
     @Override
 	public Mutants getAllMutants() {
 		

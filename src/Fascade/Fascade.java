@@ -8,12 +8,12 @@ import dataAccessLayer.*;
 import transferObject.*;
 
 public class Fascade implements IFascade {
-	ICorrector corrector;
-	IDataInserter dataInserter;
-	IMutantGenerator mutantGenerator;
-	IReaderXML readerXML;
-	IWordDAO wordDAO;
-	IMutantDAO mutantDAO;
+	ICorrector corrector = new Corrector();
+	IDataInserter dataInserter = new DataInserter();
+	IMutantGenerator mutantGenerator = new MutantGenerator();
+	IReaderXML readerXML = new ReaderXML();
+	IWordDAO wordDAO = new WordDAO();
+	IMutantDAO mutantDAO = new MutantDAO();
 	
 	/*
 	 * stores incorrect words into an array list and return that list 
@@ -69,28 +69,39 @@ public class Fascade implements IFascade {
 	}
 	
 	// insert built-in words mutant
+	@Override
 	public void insertBuiltInMutants() {
 		mutantDAO.insertBuiltInMutants();
 	}
 	// insert mutants for manually added words
+	@Override
 	public boolean manualWordMutant(String word) {
 		return mutantDAO.manualWordMutant(word);
 	}
 	
 	// Return all mutants from database
+	@Override
 	public Mutants getAllMutants() {
 		return mutantDAO.getAllMutants();
 	}
 
+	@Override
 	public void insertBuiltInData(String path) {
 		wordDAO.insertBuiltInData(path);
 	}
 	
+	@Override
 	public Words getAllWords() {
 		return wordDAO.getAllWords();
 	}
 	
+	@Override
 	public boolean manualAddWords(String userName, String word) {
 		return wordDAO.manualAddWords(userName, word);
+	}
+	
+	@Override
+	public void insertWordRef() {
+		wordDAO.insertWordRef();
 	}
 }

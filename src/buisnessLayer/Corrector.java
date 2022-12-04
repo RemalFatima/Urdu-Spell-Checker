@@ -9,20 +9,22 @@ package buisnessLayer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Fascade.Fascade;
+import Fascade.IFascade;
 import dataAccessLayer.IWordDAO;
 import dataAccessLayer.WordDAO;
 import transferObject.Words;
 
 public class Corrector implements ICorrector {
-IWordDAO wordDao = new WordDAO();
+IFascade dalFascade ;
 Words words = new Words();
 /*
  * stores incorrect words into an array list and return that list 
  */
 public ArrayList<String> Incorrectwords(String sentence)
 {
-	
-	words = wordDao.getAllWords();
+	dalFascade = new Fascade();
+	words = dalFascade.getAllWords();
 	ArrayList<String> incorrectWords = new ArrayList<String>();
 	for(String word : sentence.split(" ")) {
 		if(!words.getWords().containsKey(word))
@@ -38,8 +40,8 @@ public ArrayList<String> Incorrectwords(String sentence)
  */
 public ArrayList<String> correctWords(String sentence)
 {
-	
-	words = wordDao.getAllWords();
+	dalFascade = new Fascade();
+	words = dalFascade.getAllWords();
 	ArrayList<String> correctWords = new ArrayList<String>();
 	for(String word : sentence.split(" ")) {
 		if(words.getWords().containsKey(word))

@@ -1,5 +1,7 @@
 package buisnessLayer;
 
+import Fascade.Fascade;
+import Fascade.IFascade;
 import dataAccessLayer.IMutantDAO;
 import dataAccessLayer.IWordDAO;
 import dataAccessLayer.MutantDAO;
@@ -12,21 +14,17 @@ import dataAccessLayer.WordDAO;
 
 public class DataInserter implements IDataInserter {
 	
-	IWordDAO wordDAO;
-	IMutantDAO mutantDAO;
+	private IFascade dalFascade;
 	
-	public DataInserter(){
-		wordDAO = new WordDAO();
-		mutantDAO = new MutantDAO();
-	}
 	
 	// Author : Remal Fatima
 	// Calls function to insert data into database
 	public void insertBuiltInData(String path,boolean wordRefEnter) {
-		wordDAO.insertBuiltInData(path);
+		dalFascade = new Fascade();
+		dalFascade.insertBuiltInData(path);
 		if(wordRefEnter)
-			wordDAO.insertWordRef();
-		mutantDAO.insertBuiltInMutants();
+			dalFascade.insertWordRef();
+		dalFascade.insertBuiltInMutants();
 		
 	}
 	
@@ -34,7 +32,8 @@ public class DataInserter implements IDataInserter {
 	// Manually add new words by user
 	public void insertManualWord(String sentence, String userName)
 	{
-		wordDAO.manualAddWords(userName, sentence);
+		dalFascade = new Fascade();
+		dalFascade.manualAddWords(userName, sentence);
 	}
 	
 	// Author : Absar Ali
@@ -42,7 +41,8 @@ public class DataInserter implements IDataInserter {
 	
 	public void insertManualMutants(String word)
 	{
-		mutantDAO.manualWordMutant(word);
+		dalFascade = new Fascade();
+		dalFascade.manualWordMutant(word);
 	}
 
 }
