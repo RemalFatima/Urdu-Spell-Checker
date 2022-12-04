@@ -4,15 +4,16 @@ import java.io.File;
 import java.util.ArrayList;
 
 import buisnessLayer.*;
-import transferObject.Content;
-import transferObject.Mutants;
-import transferObject.Words;
+import dataAccessLayer.*;
+import transferObject.*;
 
 public class Fascade implements IFascade {
 	ICorrector corrector;
 	IDataInserter dataInserter;
 	IMutantGenerator mutantGenerator;
 	IReaderXML readerXML;
+	IWordDAO wordDAO;
+	IMutantDAO mutantDAO;
 	
 	/*
 	 * stores incorrect words into an array list and return that list 
@@ -66,5 +67,30 @@ public class Fascade implements IFascade {
 	public Content getContent() {
 		return readerXML.getContent();
 	}
+	
+	// insert built-in words mutant
+	public void insertBuiltInMutants() {
+		mutantDAO.insertBuiltInMutants();
+	}
+	// insert mutants for manually added words
+	public boolean manualWordMutant(String word) {
+		return mutantDAO.manualWordMutant(word);
+	}
+	
+	// Return all mutants from database
+	public Mutants getAllMutants() {
+		return mutantDAO.getAllMutants();
+	}
 
+	public void insertBuiltInData(String path) {
+		wordDAO.insertBuiltInData(path);
+	}
+	
+	public Words getAllWords() {
+		return wordDAO.getAllWords();
+	}
+	
+	public boolean manualAddWords(String userName, String word) {
+		return wordDAO.manualAddWords(userName, word);
+	}
 }
