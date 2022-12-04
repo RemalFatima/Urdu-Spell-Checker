@@ -36,7 +36,12 @@ public class MutantGeneratorTests {
 		Mutants result = new Mutants();
 		result.getMutant().put("اام","عام");
 		result.getMutant().put("ععم", "عام");
+		result.getMutant().put("اعم", "عام");
+		for(String word1 : mutant.getMutant().keySet()) {
+			System.out.println(word1);
+		}
 		assertEquals(mutant.getMutant(),result.getMutant());
+		
 		
 	}
 	

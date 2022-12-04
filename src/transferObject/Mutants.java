@@ -19,4 +19,8 @@ public class Mutants {
 		this.mutant = mutant;
 	}
 	
+	public void mergeList(Mutants newMutants) {
+		this.mutant.putAll(newMutants.getMutant());
+	}
+	
 }
