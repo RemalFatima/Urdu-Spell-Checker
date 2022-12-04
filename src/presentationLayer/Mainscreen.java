@@ -12,6 +12,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import javax.swing.text.Utilities;
+
 import buisnessLayer.*;
 import dataAccessLayer.*;
 
@@ -28,14 +30,20 @@ import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /*
  * @Author: ManalSaqib 20F-0141 
  * Main screen interface to highlight the incorrect words
  * 
- * @Author Absar Ali
+ * @Author AbsarAli
  * Changed interface colors
+ * 
+ * @Author: ManalSaqib 20F-0141 
+ * Add click able event on mouse click to show suggestions of correct words
  */
+
 
 public class Mainscreen extends JFrame {
 
@@ -144,6 +152,28 @@ public class Mainscreen extends JFrame {
 			}
 		});
 		checkBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
+		
+		textArea.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try
+			    {
+			            String wrd=null;
+			            int pt=textArea.viewToModel(e.getPoint());
+			            int spt=Utilities.getWordStart(textArea,pt);
+			            int ept=Utilities.getWordEnd(textArea,pt);
+			            textArea.setSelectionStart(spt);
+			            textArea.setSelectionEnd(ept);
+			            wrd=textArea.getSelectedText();
+			            System.out.println("TextPane word="+wrd);
+			    }
+			    catch(Exception e1)
+			    {
+			        e1.printStackTrace();
+			    }
+			}
+		});
 		textArea.setBounds(0, 182, 593, 250);
 		spellCheckPanel.add(textArea);
 		textArea.setBackground(new Color(34, 46, 66));
@@ -308,4 +338,5 @@ public class Mainscreen extends JFrame {
 		spellCheckerBtn_1_1.setBounds(13, 356, 247, 55);
 		sidePanel.add(spellCheckerBtn_1_1);
 	}
+	
 }
