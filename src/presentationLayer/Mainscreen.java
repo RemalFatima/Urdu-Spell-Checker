@@ -32,6 +32,8 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollBar;
+import javax.swing.JSeparator;
 
 /*
  * @Author: ManalSaqib 20F-0141 
@@ -42,6 +44,7 @@ import java.awt.event.MouseEvent;
  * 
  * @Author: ManalSaqib 20F-0141 
  * Add click able event on mouse click to show suggestions of correct words
+ * changed interface 
  */
 
 
@@ -174,9 +177,9 @@ public class Mainscreen extends JFrame {
 			    }
 			}
 		});
-		textArea.setBounds(0, 182, 593, 250);
+		textArea.setBounds(0, 182, 286, 250);
 		spellCheckPanel.add(textArea);
-		textArea.setBackground(new Color(34, 46, 66));
+		textArea.setBackground(new Color(0, 37, 74));
 		textArea.setForeground(Color.WHITE);
 		textArea.setCaretColor(Color.white);
 		
@@ -186,6 +189,21 @@ public class Mainscreen extends JFrame {
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBackground(Color.CYAN);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setBackground(new Color(0, 37, 74));
+		textArea_1.setBounds(293, 182, 273, 250);
+		spellCheckPanel.add(textArea_1);
+		
+		JScrollBar scrollBar = new JScrollBar();
+		scrollBar.setForeground(Color.LIGHT_GRAY);
+		scrollBar.setBackground(new Color(255, 255, 255));
+		scrollBar.setBounds(566, 182, 17, 250);
+		spellCheckPanel.add(scrollBar);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(191, 141, 72, -75);
+		spellCheckPanel.add(separator);
 		
 		JPanel importPanel = new JPanel();
 		importPanel.setBackground(new Color(34, 46, 66));
@@ -338,5 +356,4 @@ public class Mainscreen extends JFrame {
 		spellCheckerBtn_1_1.setBounds(13, 356, 247, 55);
 		sidePanel.add(spellCheckerBtn_1_1);
 	}
-	
 }
