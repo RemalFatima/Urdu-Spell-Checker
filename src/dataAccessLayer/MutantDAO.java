@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import buisnessLayer.IMutantGenerator;
 import buisnessLayer.MutantGenerator;
 import transferObject.Mutants;
 import transferObject.Words;
@@ -16,7 +17,7 @@ import transferObject.Words;
  *
  */
 
-public class MutantDAO {
+public class MutantDAO implements IMutantDAO {
 	
 	String url = "jdbc:mysql://localhost:3307/content?useSSL=false";
     String user = "root";
@@ -26,9 +27,10 @@ public class MutantDAO {
      * Author Absar Ali ( 20F-0232)
      * Function to insert mutant into database
      */
-    public void insertBuiltInMutants() {
-    	WordDAO wordDAO = new WordDAO();
-    	MutantGenerator mutantGenerator = new MutantGenerator();
+    @Override
+	public void insertBuiltInMutants() {
+    	IWordDAO wordDAO = new WordDAO();
+    	IMutantGenerator mutantGenerator = new MutantGenerator();
     	Mutants mutants = mutantGenerator.generateMutants(wordDAO.getAllWords());
     	String query ;
     	Connection con = null;
@@ -53,12 +55,13 @@ public class MutantDAO {
     	}
     }
  
-    public boolean manualWordMutant(String word)
+    @Override
+	public boolean manualWordMutant(String word)
     {
     	Mutants mutants = new Mutants();
     	Words words = new Words();
     	words.put(word, 3);
-    	MutantGenerator mutantGenerator = new MutantGenerator();
+    	IMutantGenerator mutantGenerator = new MutantGenerator();
     	mutants = mutantGenerator.generateMutants(words);
     	Connection con = null;
     	String query = "INSERT INTO `Words` (word, frequency) VALUE ('" + word + "' ," + 1 + ")";
@@ -88,7 +91,8 @@ public class MutantDAO {
     	return true;
     }
  
-    public Mutants getAllMutants() {
+    @Override
+	public Mutants getAllMutants() {
 		
      String query = "SELECT * FROM `mutants`";
 

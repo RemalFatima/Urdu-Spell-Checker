@@ -1,6 +1,8 @@
 package buisnessLayer;
 
 import java.util.HashMap;
+
+import dataAccessLayer.IWordDAO;
 import dataAccessLayer.WordDAO;
 import transferObject.Mutants;
 import transferObject.Words;
@@ -12,9 +14,9 @@ import transferObject.Words;
  * 		Mutant generator create mutants of words
  */
 
-public class MutantGenerator {
+public class MutantGenerator implements IMutantGenerator {
 	
-	WordDAO wordDAO;
+	IWordDAO wordDAO;
 	
 	public MutantGenerator() {
 		wordDAO = new WordDAO();
@@ -22,6 +24,7 @@ public class MutantGenerator {
 	}
 	
 	// Create Mutants 
+	@Override
 	public Mutants generateMutants(Words _wordsList) {
 		
 		Words words = _wordsList;

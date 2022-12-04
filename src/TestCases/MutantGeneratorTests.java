@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import buisnessLayer.IMutantGenerator;
 import buisnessLayer.MutantGenerator;
 import transferObject.Mutants;
 import transferObject.Words;
@@ -27,7 +28,7 @@ public class MutantGeneratorTests {
 	@Test
 	public void generateMutantValidWord() {
 		
-		MutantGenerator mutantGenerator = new MutantGenerator();
+		IMutantGenerator mutantGenerator = new MutantGenerator();
 		Mutants mutant = new Mutants();
 		Words word = new Words();
 		word.put("عام",5);
@@ -43,7 +44,7 @@ public class MutantGeneratorTests {
 	@Test
 	public void generateMutantInvalidWord() {
 		
-		MutantGenerator mutantGenerator = new MutantGenerator();
+		IMutantGenerator mutantGenerator = new MutantGenerator();
 		Mutants mutant = new Mutants();
 		Words word = new Words();
 		word.put("وجود",5);
@@ -57,7 +58,7 @@ public class MutantGeneratorTests {
 		@Test
 		public void generateMutantNoWord() {
 			
-			MutantGenerator mutantGenerator = new MutantGenerator();
+			IMutantGenerator mutantGenerator = new MutantGenerator();
 			Mutants mutant = new Mutants();
 			Words word = new Words();
 			mutant = mutantGenerator.generateMutants(word);

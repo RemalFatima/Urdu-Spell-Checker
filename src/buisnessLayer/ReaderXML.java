@@ -11,9 +11,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import dataAccessLayer.WordDAO;
-import transferObject.TransferContent;
+import transferObject.Content;
 
-public class ReaderXML {
+public class ReaderXML implements IReaderXML {
 	
 	private String title;
 	private String author;
@@ -24,6 +24,7 @@ public class ReaderXML {
 
 
 	// Reading XML File
+	@Override
 	public boolean readFile(File file)
 	{
 		try {  
@@ -82,8 +83,9 @@ public class ReaderXML {
 	
 	 
 	// Return content
-	public TransferContent getContent() {
-		TransferContent content = new TransferContent();
+	@Override
+	public Content getContent() {
+		Content content = new Content();
 		content.setTitle(this.title);
 		content.setAuthor(this.author);
 		content.setContent(this.contentInFile);

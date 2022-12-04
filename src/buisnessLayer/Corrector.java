@@ -9,11 +9,12 @@ package buisnessLayer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import dataAccessLayer.IWordDAO;
 import dataAccessLayer.WordDAO;
 import transferObject.Words;
 
-public class Corrector {
-WordDAO wordDao = new WordDAO();
+public class Corrector implements ICorrector {
+IWordDAO wordDao = new WordDAO();
 Words words = new Words();
 /*
  * stores incorrect words into an array list and return that list 

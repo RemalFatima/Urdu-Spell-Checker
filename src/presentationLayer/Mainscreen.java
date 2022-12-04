@@ -59,11 +59,15 @@ public class Mainscreen extends JFrame {
 		incorrectWords =  corrector.Incorrectwords(oldSentence);
 		textArea.setText("");
 		for(String word : oldSentence.split(" ")) {
-			if(incorrectWords.contains(word))
+			
+			if(incorrectWords.contains(word)) {
 				appendToPane(textArea, word, Color.red);
-			else
+			}
+			else {
 				appendToPane(textArea,word,Color.white);
+			}
 			appendToPane(textArea," ", Color.white);
+			
 		}
 		appendToPane(textArea," ", Color.white);
 		
@@ -107,7 +111,7 @@ public class Mainscreen extends JFrame {
 	 * Create the frame.
 	 */
 	public Mainscreen() {
-		setTitle("Urdu Spell Checler");
+		setTitle("Urdu Spell Checker");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 895, 499);
@@ -180,8 +184,8 @@ public class Mainscreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DataInserter dataInserter = new DataInserter();
 				dataInserter.insertBuiltInData(xmlDataPathTextField.getText(), wordRefChkBtn.isSelected() );
-				MutantGenerator mutantGenerator = new MutantGenerator();
-				WordDAO wordDAO = new WordDAO();
+				IMutantGenerator mutantGenerator = new MutantGenerator();
+				IWordDAO wordDAO = new WordDAO();
 				mutantGenerator.generateMutants(wordDAO.getAllWords());
 			}
 		});

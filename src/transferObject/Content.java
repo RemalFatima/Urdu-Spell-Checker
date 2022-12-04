@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 
 //Transfer Content between business layer and data access layer
-public class TransferContent {
+public class Content {
 
 	private String title;
 	private String author;

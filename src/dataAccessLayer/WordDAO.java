@@ -9,6 +9,7 @@ import java.util.List;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
+import buisnessLayer.IReaderXML;
 import buisnessLayer.MutantGenerator;
 import buisnessLayer.ReaderXML;
 import transferObject.*;
@@ -17,9 +18,9 @@ import transferObject.*;
 // Author  : Remal Fatima
 
 
-public class WordDAO {
+public class WordDAO implements IWordDAO {
 	
-	ReaderXML readerXML;
+	IReaderXML readerXML;
 	private HashMap<String, Integer> words = new HashMap<String,Integer>();
 	private HashMap<String,String> wordForeignKey = new HashMap<String,String>();
 	private ArrayList<String> content = new ArrayList<String>();
@@ -35,12 +36,13 @@ public class WordDAO {
     
     // Insert data into content table ( title , author , content in file )
     // Author  : Remal Fatima
-    public void insertContent(File file, Connection con) {
+    @Override
+	public void insertContent(File file, Connection con) {
     	
     	// Read File
     	readerXML.readFile(file);
     	// Get content from file
-    	TransferContent contents = readerXML.getContent();
+    	Content contents = readerXML.getContent();
     	// query
     	String query = "INSERT INTO `Content` (Title, Author, content) VALUE ('" + contents.getTitle() + "' ,'" + contents.getAuthor() + "','" + contents.getContent() + "')";
     	
@@ -55,6 +57,7 @@ public class WordDAO {
          }
     }
     
+	@Override
 	public HashMap<String, Integer> getWords(String content, String title){
 		
 		// Using split function.
@@ -75,7 +78,8 @@ public class WordDAO {
     // Author  : Remal Fatima
     // Insert word into Words table ( word , frequency , title of file where found first )
    	
-    public void insertWords() {
+    @Override
+	public void insertWords() {
     	
     	String query = "Delete From `Words`";
     	Connection con = null;
@@ -105,7 +109,7 @@ public class WordDAO {
     	words.remove("");
     	wordForeignKey.remove("");
     	Words word = getAllWords();
-    	
+    	// insert word if does not exists already else update frquency
     	for(String key : words.keySet()) {
 			
 			
@@ -133,7 +137,8 @@ public class WordDAO {
     	
     }
     
-public void insertWordRef() {
+    @Override
+	public void insertWordRef() {
     	
     	String query ;
     	Connection con = null;
@@ -151,6 +156,7 @@ public void insertWordRef() {
         
             	title = rs.getString(1);
             	content = rs.getString(3);
+            	int titleID = Integer.parseInt(rs.getString(4));
             	for(String word : content.split(" "))
             	{
             		if(!wordForeignKey.containsKey(word))
@@ -160,7 +166,7 @@ public void insertWordRef() {
             	for(String key : wordForeignKey.keySet()) {
             		try {
             			Statement st2 = con.createStatement();
-            			query = "INSERT INTO `WordReference` (word, FileName) VALUE ('" + key + "' ,'" + wordForeignKey.get(key) + "')";
+            			query = "INSERT INTO `WordReference` (word, FileName, FileID) VALUE ('" + key + "' ,'" + wordForeignKey.get(key) + "', " + titleID + ")";
             			st2.executeUpdate(query);
             		} catch (SQLException ex) {
             			System.out.println(ex.getMessage());
@@ -182,7 +188,8 @@ public void insertWordRef() {
     // Insert Both content and words into database
     // Arguements take path of folder where file is located
     
-    public void insertBuiltInData(String path) {
+    @Override
+	public void insertBuiltInData(String path) {
     	
     	File folder = new File(path);
     	Connection con = null;
@@ -213,13 +220,14 @@ public void insertWordRef() {
      * 		Return Words and frequency from Database
      */
     
-    public Words getAllWords() {
+    @Override
+	public Words getAllWords() {
 		
         String query = "SELECT word , frequency FROM `Words`";
 
         Words words = new Words();
       
-        
+        // Read words from database
         try {
         	Connection con = DriverManager.getConnection(url, user, password);
         	Statement st = con.createStatement();
@@ -237,10 +245,16 @@ public void insertWordRef() {
         return words;
 	}
     
-    public boolean manualAddWords(String userName, String word)
+    // Author : Remal Fatima 
+ 	// Manually add new words by user
+    @Override
+	public boolean manualAddWords(String userName, String word)
     {
-    	Words words = getAllWords();
+    	Words words = getAllWords(); // reads from database
+    	
     	String query = "INSERT INTO `Words` (word, frequency) VALUE ('" + word + "' ," + 1 + ")";
+    	
+    	// insert new word into Words & WordReference Table
     	try {
          	// execute query
     		Connection con = DriverManager.getConnection(url, user, password);
