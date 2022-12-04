@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -19,6 +20,7 @@ import dataAccessLayer.*;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -33,6 +35,7 @@ import javax.swing.JCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
 /*
@@ -52,9 +55,11 @@ public class Mainscreen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextPane textArea = new JTextPane();
+	
 	private JTextField xmlDataPathTextField;
 	private JTextField userNameTextField;
 	private JTextField WordTextField;
+
 
      // Highlight incorrect words from JTextPane by deleting old text and overwriting with new text
 
@@ -169,6 +174,7 @@ public class Mainscreen extends JFrame {
 			            textArea.setSelectionStart(spt);
 			            textArea.setSelectionEnd(ept);
 			            wrd=textArea.getSelectedText();
+			            
 			            System.out.println("TextPane word="+wrd);
 			    }
 			    catch(Exception e1)
@@ -179,9 +185,9 @@ public class Mainscreen extends JFrame {
 		});
 		textArea.setBounds(0, 182, 286, 250);
 		spellCheckPanel.add(textArea);
-		textArea.setBackground(new Color(0, 37, 74));
+		textArea.setBackground(new Color(0, 0, 72));
 		textArea.setForeground(Color.WHITE);
-		textArea.setCaretColor(Color.white);
+		textArea.setCaretColor(new Color(255, 255, 255));
 		
 		JLabel lblNewLabel = new JLabel("اپنا متن یہاں درج کریں: ");
 		lblNewLabel.setBounds(388, 145, 195, 25);
@@ -191,19 +197,19 @@ public class Mainscreen extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBackground(new Color(0, 37, 74));
-		textArea_1.setBounds(293, 182, 273, 250);
-		spellCheckPanel.add(textArea_1);
+		textArea_1.setBounds(296, 182, 287, 250);
+		//spellCheckPanel.add(textArea_1);
+	JScrollPane sp = new JScrollPane (textArea_1,JScrollPane .VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+spellCheckPanel.add(sp);
+JScrollPane scrollPane = new JScrollPane();
+scrollPane.setBounds(296, 182, 287, 250);
+spellCheckPanel.add(scrollPane);
+JTextArea textArea_2 = new JTextArea();
+textArea_2.setForeground(new Color(255, 255, 255));
+textArea_2.setBackground(new Color(0, 0, 72));
+scrollPane.setViewportView(textArea_2);
 		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setForeground(Color.LIGHT_GRAY);
-		scrollBar.setBackground(new Color(255, 255, 255));
-		scrollBar.setBounds(566, 182, 17, 250);
-		spellCheckPanel.add(scrollBar);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(191, 141, 72, -75);
-		spellCheckPanel.add(separator);
+	   
 		
 		JPanel importPanel = new JPanel();
 		importPanel.setBackground(new Color(34, 46, 66));
