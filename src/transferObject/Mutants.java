@@ -21,18 +21,23 @@ public class Mutants {
 	}
 	
 	public void setMutant(HashMap<String,String> mutants) {
+		
 		for(String newMutants : mutants.keySet() )
 		{
+			if(newMutants != mutants.get(newMutants))
 			this.put(newMutants, mutants.get(newMutants));
 		}
 	}
 
 	public void put(String mutant, String word) {
+		if(mutant != word) {
 		Mutant newMutant = new Mutant();
 		newMutant.setCorrectWord(word);
 		newMutant.setMutantString(mutant);
 		this.mutant.add(newMutant);
+		}
 	}
+	
 	public void merge(Mutants mutants) {
 		this.mutant.addAll(mutants.getMutant());
 	}
@@ -42,6 +47,13 @@ public class Mutants {
 				return true;
 		return false;
 	}
+	public boolean containsMutant(String newMutant, String word) {
+		
+			if(mutant.contains(newMutant)  && mutant.contains(word))
+				return true;
+		return false;
+	}
+	
 	
 	
 	

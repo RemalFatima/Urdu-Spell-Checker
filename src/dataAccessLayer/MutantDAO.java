@@ -39,7 +39,7 @@ public class MutantDAO implements IMutantDAO {
 	public void insertBuiltInMutants() {
     	
     	bllFascade = new Fascade();
-    	Mutants mutants =  bllFascade.generateMutants(bllFascade.getAllWords());  //mutantGenerator.generateMutants(wordDAO.getAllWords());
+    	Mutants mutants =  new Mutants();
   
     	String query ;
     	Connection con = null;
@@ -49,20 +49,26 @@ public class MutantDAO implements IMutantDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	for( Mutant key : mutants.getMutant()) {
-    		
+    	Words wordList = bllFascade.getAllWords();
+    	for( String word : wordList.getWords().keySet()) {
+    		mutants.getMutant().clear();
+    		Words _word = new Words();
+    		_word.put(word, wordList.getWords().get(word));
+    		mutants = bllFascade.generateMutants(_word);
+    		System.out.println(mutants.getMutant().size() + " size ");
+    		for(Mutant mutant : mutants.getMutant()) {
 			try {
 				Count.num += 1;
 				Statement st = con.createStatement();
 				//System.out.println(key.getCorrectWord());
-				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key.getMutantString() + "' ,'" + key.getCorrectWord() + "')";
+				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + mutant.getMutantString()+ "' ,'" + mutant.getCorrectWord() + "')";
 				st.executeUpdate(query);
 				
 			} catch (SQLException e) {
 				
 				System.out.println(e.getMessage());
 			}
+    		}
     	}
     }
     
