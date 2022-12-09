@@ -53,6 +53,11 @@ import javax.swing.JProgressBar;
  * @Author: ManalSaqib 20F-0141 
  * Add click able event on mouse click to show suggestions of correct words
  * changed interface 
+ * 
+ *  * @Author: ManalSaqib 20F-0141 
+ * Modify on mouse click function to call suggestion class 
+
+ * 
  */
 
 
