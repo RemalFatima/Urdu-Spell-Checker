@@ -160,28 +160,30 @@ public class MutantGenerator implements IMutantGenerator {
 						|| temp.charAt(i) == 'ٹ' || temp.charAt(i) == 'ج' || temp.charAt(i) == 'ج'
 						|| temp.charAt(i) == 'د' || temp.charAt(i) == 'ڈ' || temp.charAt(i) == 'ر'
 						|| temp.charAt(i) == 'ڑ' || temp.charAt(i) == 'م' || temp.charAt(i) == 'ل'
-						|| temp.charAt(i) == 'ن' || temp.charAt(i) == 'ی')  && i+1 < temp.length() && temp.charAt(i+1) == 'ھ') {
+						)  && i+1 < temp.length() && temp.charAt(i+1) == 'ھ') {
 
 					HashMap<String,String> newList = new HashMap<String,String>();
 					newList = replaceCharacters(i+1,temp,word,group2);
 					if(!containsAll(mutantList,newList)) {
 						newList = unique(mutantList,newList);
-						//generate(newList,word);
+						if(mutantList.size() > 1000)
+							break;
+						generate(newList,word);
 						temp = word;
 					}
 				}
 				
 				else if((temp.charAt(i) == 'ب' || temp.charAt(i) == 'پ' 
 						|| temp.charAt(i) == 'ٹ' || temp.charAt(i) == 'ج' || temp.charAt(i) == 'ج'
-						|| temp.charAt(i) == 'د' || temp.charAt(i) == 'ڈ' || temp.charAt(i) == 'ر'
-						|| temp.charAt(i) == 'ڑ' || temp.charAt(i) == 'م' || temp.charAt(i) == 'ل'
-						|| temp.charAt(i) == 'ن' || temp.charAt(i) == 'ی') ) {
+						|| temp.charAt(i) == 'د' || temp.charAt(i) == 'ڈ'  || temp.charAt(i) == 'م' || temp.charAt(i) == 'ل' ) ) {
 
 					HashMap<String,String> newList = new HashMap<String,String>();
 					newList = replaceCharacters(i,temp,word,group3);
+					if(mutantList.size() > 1000)
+						break;
 					if(!containsAll(mutantList,newList)) {
 						newList = unique(mutantList,newList);
-						//generate(newList,word);
+						generate(newList,word);
 						temp = word;
 					}
 				}
