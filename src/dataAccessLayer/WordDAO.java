@@ -11,6 +11,7 @@ import org.w3c.dom.*;
 
 import Fascade.Fascade;
 import Fascade.IFascade;
+import buisnessLayer.Count;
 import buisnessLayer.IReaderXML;
 import buisnessLayer.MutantGenerator;
 import buisnessLayer.ReaderXML;
@@ -50,6 +51,7 @@ public class WordDAO implements IWordDAO {
          	// execute query
          	Statement st = con.createStatement();
              st.executeUpdate(query);
+         	Count.num += 1;
 
          } catch (SQLException ex) {
              System.out.println(ex.getMessage());
@@ -113,9 +115,8 @@ public class WordDAO implements IWordDAO {
     	for(String key : words.keySet()) {
 			
 			
-		
+    		Count.num += 1;
     		try {
-			
 				Statement st = con.createStatement();
 				if(!word.getWords().containsKey(key) ) {
 				
@@ -262,6 +263,7 @@ public class WordDAO implements IWordDAO {
             st.executeUpdate(query);
             Statement st2 = con.createStatement();
 			query = "INSERT INTO `WordReference` (word, FileName) VALUE ('" + word + "' ,'" + userName + "')";
+		
 			st2.executeUpdate(query);
             
             

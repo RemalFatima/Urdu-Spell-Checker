@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import buisnessLayer.IMutantGenerator;
 import buisnessLayer.MutantGenerator;
+import transferObject.Mutant;
 import transferObject.Mutants;
 import transferObject.Words;
 
@@ -31,14 +32,14 @@ public class MutantGeneratorTests {
 		IMutantGenerator mutantGenerator = new MutantGenerator();
 		Mutants mutant = new Mutants();
 		Words word = new Words();
-		word.put("عام",5);
+		word.put("انسان",5);
 		mutant = mutantGenerator.generateMutants(word);
 		Mutants result = new Mutants();
-		result.getMutant().put("اام","عام");
-		result.getMutant().put("ععم", "عام");
-		result.getMutant().put("اعم", "عام");
-		for(String word1 : mutant.getMutant().keySet()) {
-			System.out.println(word1);
+		result.put("اام","عام");
+		result.put("ععم", "عام");
+		result.put("اعم", "عام");
+		for(Mutant word1 : mutant.getMutant()) {
+			System.out.println(word1.getMutantString());
 		}
 		assertEquals(mutant.getMutant(),result.getMutant());
 		
@@ -52,7 +53,7 @@ public class MutantGeneratorTests {
 		IMutantGenerator mutantGenerator = new MutantGenerator();
 		Mutants mutant = new Mutants();
 		Words word = new Words();
-		word.put("وجود",5);
+		word.put("",5);
 		mutant = mutantGenerator.generateMutants(word);
 		Mutants result = new Mutants();
 		assertEquals(mutant.getMutant(),result.getMutant());

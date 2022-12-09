@@ -15,8 +15,12 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.Utilities;
 
+
+import Fascade.Fascade;
+import Fascade.IFascade;
 import buisnessLayer.*;
 import dataAccessLayer.*;
+import transferObject.Mutant;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -37,6 +41,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JProgressBar;
 
 /*
  * @Author: ManalSaqib 20F-0141 
@@ -59,6 +64,8 @@ public class Mainscreen extends JFrame {
 	private JTextField xmlDataPathTextField;
 	private JTextField userNameTextField;
 	private JTextField WordTextField;
+	private JTextPane suggestionTextArea;
+	public JProgressBar progressBar;
 
 
      // Highlight incorrect words from JTextPane by deleting old text and overwriting with new text
@@ -130,7 +137,7 @@ public class Mainscreen extends JFrame {
 		setTitle("Urdu Spell Checker");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 895, 499);
+		setBounds(100, 100, 1211, 719);
 		contentPane = new JPanel();
 		contentPane.setForeground(Color.DARK_GRAY);
 		contentPane.setBackground(new Color(56, 74, 107));
@@ -141,7 +148,7 @@ public class Mainscreen extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBorder(null);
-		tabbedPane.setBounds(281, 0, 598, 460);
+		tabbedPane.setBounds(281, 0, 914, 680);
 		contentPane.add(tabbedPane);
 		
 		JPanel spellCheckPanel = new JPanel();
@@ -174,8 +181,11 @@ public class Mainscreen extends JFrame {
 			            textArea.setSelectionStart(spt);
 			            textArea.setSelectionEnd(ept);
 			            wrd=textArea.getSelectedText();
-			            
-			            System.out.println("TextPane word="+wrd);
+			            suggestionTextArea.setText("");
+			            SuggestionWords suggestions = new SuggestionWords();
+			            for(Mutant mutant : suggestions.suggestionWords(wrd)) {
+			            appendToPane(suggestionTextArea,mutant.getCorrectWord(),Color.white);
+			            }
 			    }
 			    catch(Exception e1)
 			    {
@@ -183,14 +193,14 @@ public class Mainscreen extends JFrame {
 			    }
 			}
 		});
-		textArea.setBounds(0, 182, 286, 250);
+		textArea.setBounds(20, 182, 679, 459);
 		spellCheckPanel.add(textArea);
 		textArea.setBackground(new Color(0, 0, 72));
 		textArea.setForeground(Color.WHITE);
 		textArea.setCaretColor(new Color(255, 255, 255));
 		
 		JLabel lblNewLabel = new JLabel("اپنا متن یہاں درج کریں: ");
-		lblNewLabel.setBounds(388, 145, 195, 25);
+		lblNewLabel.setBounds(504, 138, 195, 25);
 		spellCheckPanel.add(lblNewLabel);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBackground(Color.CYAN);
@@ -201,13 +211,12 @@ public class Mainscreen extends JFrame {
 		//spellCheckPanel.add(textArea_1);
 	JScrollPane sp = new JScrollPane (textArea_1,JScrollPane .VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 spellCheckPanel.add(sp);
-JScrollPane scrollPane = new JScrollPane();
-scrollPane.setBounds(296, 182, 287, 250);
-spellCheckPanel.add(scrollPane);
-JTextArea textArea_2 = new JTextArea();
-textArea_2.setForeground(new Color(255, 255, 255));
-textArea_2.setBackground(new Color(0, 0, 72));
-scrollPane.setViewportView(textArea_2);
+suggestionTextArea = new JTextPane();
+suggestionTextArea.setBounds(734, 182, 165, 459);
+spellCheckPanel.add(suggestionTextArea);
+suggestionTextArea.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 20));
+suggestionTextArea.setForeground(new Color(255, 255, 255));
+suggestionTextArea.setBackground(new Color(0, 0, 72));
 		
 	   
 		
@@ -219,33 +228,46 @@ scrollPane.setViewportView(textArea_2);
 		xmlDataPathTextField = new JTextField();
 		xmlDataPathTextField.setText("C:\\Users\\Hp\\Downloads\\makhzan-master\\makhzan-master\\text");
 		xmlDataPathTextField.setBackground(Color.LIGHT_GRAY);
-		xmlDataPathTextField.setBounds(10, 212, 573, 28);
+		xmlDataPathTextField.setBounds(195, 222, 573, 28);
 		importPanel.add(xmlDataPathTextField);
 		xmlDataPathTextField.setColumns(10);
 		
 		JLabel xmlPathLbl = new JLabel("ذیل میں XML فائلوں کا راستہ درج کریں:");
 		xmlPathLbl.setForeground(Color.WHITE);
 		xmlPathLbl.setFont(new Font("Tahoma", Font.BOLD, 17));
-		xmlPathLbl.setBounds(259, 162, 324, 38);
+		xmlPathLbl.setBounds(444, 172, 324, 38);
 		importPanel.add(xmlPathLbl);
 		
 		JCheckBox wordRefChkBtn = new JCheckBox("insert word references");
-		wordRefChkBtn.setBounds(10, 173, 140, 23);
+		wordRefChkBtn.setBounds(195, 183, 140, 23);
 		importPanel.add(wordRefChkBtn);
 		
 		JButton btnNewButton = new JButton("داخل کریں۔");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DataInserter dataInserter = new DataInserter();
-				dataInserter.insertBuiltInData(xmlDataPathTextField.getText(), wordRefChkBtn.isSelected() );
-				IMutantGenerator mutantGenerator = new MutantGenerator();
-				IWordDAO wordDAO = new WordDAO();
-				mutantGenerator.generateMutants(wordDAO.getAllWords());
+				
+				new Thread(new Runnable() {
+				     @Override
+				     public void run() {
+							DataInserter dataInserter = new DataInserter();
+							dataInserter.insertBuiltInData(xmlDataPathTextField.getText(), wordRefChkBtn.isSelected() );
+							
+				     }
+				}).start();
+				
+				
+				
+
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		btnNewButton.setBounds(223, 265, 124, 38);
+		btnNewButton.setBounds(408, 275, 124, 38);
 		importPanel.add(btnNewButton);
+		
+		 progressBar = new JProgressBar();
+		 progressBar.setIndeterminate(true);
+		progressBar.setBounds(195, 506, 573, 28);
+		importPanel.add(progressBar);
 		
 		
 		
@@ -255,13 +277,13 @@ scrollPane.setViewportView(textArea_2);
 		panel_2.setLayout(null);
 		
 		userNameTextField = new JTextField();
-		userNameTextField.setBounds(214, 138, 176, 34);
+		userNameTextField.setBounds(378, 144, 176, 34);
 		panel_2.add(userNameTextField);
 		userNameTextField.setColumns(10);
 		
 		WordTextField = new JTextField();
 		WordTextField.setColumns(10);
-		WordTextField.setBounds(214, 249, 176, 34);
+		WordTextField.setBounds(378, 255, 176, 34);
 		panel_2.add(WordTextField);
 		
 		JButton addWordBtn = new JButton("لفظ شامل کریں۔");
@@ -277,24 +299,24 @@ scrollPane.setViewportView(textArea_2);
 			}
 		});
 		addWordBtn.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		addWordBtn.setBounds(224, 367, 158, 40);
+		addWordBtn.setBounds(388, 373, 158, 40);
 		panel_2.add(addWordBtn);
 		
 		JLabel userNameLbl = new JLabel("اپنا نام درج کریں");
 		userNameLbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		userNameLbl.setForeground(Color.WHITE);
-		userNameLbl.setBounds(282, 93, 108, 34);
+		userNameLbl.setBounds(446, 99, 108, 34);
 		panel_2.add(userNameLbl);
 		
 		JLabel addWordLbl = new JLabel("اپنا لفظ درج کریں۔");
 		addWordLbl.setForeground(Color.WHITE);
 		addWordLbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		addWordLbl.setBounds(282, 204, 108, 34);
+		addWordLbl.setBounds(446, 210, 108, 34);
 		panel_2.add(addWordLbl);
 		
 		JPanel sidePanel = new JPanel();
 		sidePanel.setBackground(new Color(96, 210, 196));
-		sidePanel.setBounds(0, 0, 280, 460);
+		sidePanel.setBounds(0, 0, 280, 680);
 		contentPane.add(sidePanel);
 		sidePanel.setLayout(null);
 		

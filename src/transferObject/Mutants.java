@@ -1,5 +1,6 @@
 package transferObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /*
@@ -9,18 +10,40 @@ import java.util.HashMap;
 
 public class Mutants {
 	
-	private HashMap<String, String> mutant = new HashMap<String,String>();
+	private ArrayList<Mutant> mutant = new ArrayList<Mutant>();
 
-	public HashMap<String, String> getMutant() {
+	public ArrayList<Mutant> getMutant() {
 		return mutant;
 	}
 
-	public void setMutant(HashMap<String, String> mutant) {
+	public void setMutant(ArrayList<Mutant> mutant) {
 		this.mutant = mutant;
 	}
 	
-	public void mergeList(Mutants newMutants) {
-		this.mutant.putAll(newMutants.getMutant());
+	public void setMutant(HashMap<String,String> mutants) {
+		for(String newMutants : mutants.keySet() )
+		{
+			this.put(newMutants, mutants.get(newMutants));
+		}
 	}
+
+	public void put(String mutant, String word) {
+		Mutant newMutant = new Mutant();
+		newMutant.setCorrectWord(word);
+		newMutant.setMutantString(mutant);
+		this.mutant.add(newMutant);
+	}
+	public void merge(Mutants mutants) {
+		this.mutant.addAll(mutants.getMutant());
+	}
+	public boolean containsKey(String word) {
+		for(Mutant mutant : getMutant())
+			if(mutant.getMutantString().contains(word))
+				return true;
+		return false;
+	}
+	
+	
+	
 	
 }

@@ -8,8 +8,10 @@ import java.sql.Statement;
 
 import Fascade.Fascade;
 import Fascade.IFascade;
+import buisnessLayer.Count;
 import buisnessLayer.IMutantGenerator;
 import buisnessLayer.MutantGenerator;
+import transferObject.Mutant;
 import transferObject.Mutants;
 import transferObject.Words;
 
@@ -35,8 +37,10 @@ public class MutantDAO implements IMutantDAO {
     // insert mutants for builtin words
     @Override
 	public void insertBuiltInMutants() {
+    	
     	bllFascade = new Fascade();
     	Mutants mutants =  bllFascade.generateMutants(bllFascade.getAllWords());  //mutantGenerator.generateMutants(wordDAO.getAllWords());
+  
     	String query ;
     	Connection con = null;
     	try {
@@ -46,11 +50,13 @@ public class MutantDAO implements IMutantDAO {
 			e.printStackTrace();
 		}
     	
-    	for(String key : mutants.getMutant().keySet()) {
+    	for( Mutant key : mutants.getMutant()) {
+    		
 			try {
-				
+				Count.num += 1;
 				Statement st = con.createStatement();
-				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key + "' ,'" + mutants.getMutant().get(key) + "')";
+				//System.out.println(key.getCorrectWord());
+				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key.getMutantString() + "' ,'" + key.getCorrectWord() + "')";
 				st.executeUpdate(query);
 				
 			} catch (SQLException e) {
@@ -81,11 +87,11 @@ public class MutantDAO implements IMutantDAO {
 			return false;
 		}
     	
-    	for(String key : mutants.getMutant().keySet()) {
+    	for(Mutant key : mutants.getMutant()) {
 			try {
 				
 				Statement st = con.createStatement();
-				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key + "' ,'" + mutants.getMutant().get(key) + "')";
+				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key.getMutantString() + "' ,'" + key.getCorrectWord() + "')";
 				st.executeUpdate(query);
 				
 			} catch (SQLException e) {
@@ -114,7 +120,7 @@ public class MutantDAO implements IMutantDAO {
          while (rs.next()) {
          	
          	
-         	mutants.getMutant().put(rs.getString(1),rs.getString(2));
+         	mutants.put(rs.getString(1),rs.getString(2));
 
          }
 
