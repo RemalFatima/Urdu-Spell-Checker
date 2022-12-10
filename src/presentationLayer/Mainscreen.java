@@ -232,11 +232,10 @@ public class Mainscreen extends JFrame {
             }
         });
 
-        /*
-         * @Author : ManalSaqib 20F-0141
-         * @class : mouse listener function to show the suggestions and replace it
-         * 
-         */
+/*
+ * @author: Manal saqib 
+ * : modify on click mouse function to show suggestions and replace it with menu 
+ */
 		textArea.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
