@@ -2,15 +2,17 @@ package dataAccessLayer;
 
 import java.io.File;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import transferObject.Words;
+import transferObject.wordTableData;
 
 public interface IWordDAO {
 
 	// Insert data into content table ( title , author , content in file )
 	// Author  : Remal Fatima
-	void insertContent(File file, Connection con);
+	void insertContent(File file);
 
 	HashMap<String, Integer> getWords(String content, String title);
 
@@ -19,11 +21,14 @@ public interface IWordDAO {
 	void insertWordRef();
 
 	void insertBuiltInData(String path);
+	
+	boolean updateWord(wordTableData data);
 
 	Words getAllWords();
 
 	// Author : Remal Fatima 
 	// Manually add new words by user
 	boolean manualAddWords(String userName, String word);
+	public ArrayList<wordTableData> getWordsList();
 
 }
