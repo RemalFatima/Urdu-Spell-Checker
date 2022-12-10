@@ -3,6 +3,8 @@ package Fascade;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JTable;
+
 import buisnessLayer.*;
 import dataAccessLayer.*;
 import transferObject.*;
@@ -14,6 +16,7 @@ public class Fascade implements IFascade {
 	IReaderXML readerXML = new ReaderXML();
 	IWordDAO wordDAO = new WordDAO();
 	IMutantDAO mutantDAO = new MutantDAO();
+	IWordTableManager tableManager = new WordTableManager();
 	
 	/*
 	 * stores incorrect words into an array list and return that list 
@@ -103,5 +106,21 @@ public class Fascade implements IFascade {
 	@Override
 	public void insertWordRef() {
 		wordDAO.insertWordRef();
+	}
+	@Override
+	public ArrayList<wordTableData> getWordsList(){
+		return wordDAO.getWordsList();
+	}
+	@Override
+	public boolean updateWord(wordTableData data) {
+		return wordDAO.updateWord(data);
+	}
+	@Override
+	public wordTableData update(int id, String word, int frequency) {
+		return tableManager.update(id, word, frequency);
+	}
+	@Override
+	public void fillTable(JTable table ) {
+		 tableManager.fillTable(table);
 	}
 }

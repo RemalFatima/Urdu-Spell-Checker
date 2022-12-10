@@ -3,9 +3,12 @@ package Fascade;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JTable;
+
 import transferObject.Content;
 import transferObject.Mutants;
 import transferObject.Words;
+import transferObject.wordTableData;
 
 public interface IFascade {
 
@@ -52,5 +55,15 @@ public interface IFascade {
 	boolean manualAddWords(String userName, String word);
 	
 	void insertWordRef();
+	
+	public ArrayList<wordTableData> getWordsList();
+	
+	public boolean updateWord(wordTableData data);
+	
+	public void fillTable(JTable table );
+	
+	public wordTableData update(int id, String word, int frequency);
+		
+	
 
 }
