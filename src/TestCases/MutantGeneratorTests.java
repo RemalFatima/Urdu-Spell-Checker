@@ -32,7 +32,7 @@ public class MutantGeneratorTests {
 		IMutantGenerator mutantGenerator = new MutantGenerator();
 		Mutants mutant = new Mutants();
 		Words word = new Words();
-		word.put("انسان",5);
+		word.put("عام",5);
 		mutant = mutantGenerator.generateMutants(word);
 		Mutants result = new Mutants();
 		result.put("اام","عام");

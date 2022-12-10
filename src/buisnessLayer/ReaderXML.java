@@ -42,7 +42,7 @@ public class ReaderXML implements IReaderXML {
 			
 			aElement = (Element) doc.getElementsByTagName("author").item(0);
 			
-			Element cElement = (Element) doc.getElementsByTagName("document").item(0);
+			Element cElement = (Element) doc.getElementsByTagName("section").item(0);
 	
 			// assigning value in tags to variables
 			title =  tElement.getTextContent(); 
