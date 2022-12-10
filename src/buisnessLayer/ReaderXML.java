@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -20,7 +21,7 @@ public class ReaderXML implements IReaderXML {
 	private String contentInFile;
 	
 
-	
+	static Logger logger = Logger.getLogger(ReaderXML.class);
 
 
 	// Reading XML File
@@ -73,8 +74,9 @@ public class ReaderXML implements IReaderXML {
 		}   
 		catch (Exception e)   
 		{  
-			System.out.println("Error in Reading XML file in " + file.getName());  
-			System.out.println(e.getMessage());  
+			logger.info("Error in Reading XML file in " + file.getName());  
+			logger.info(e.getCause());
+			logger.warn(e.getMessage());  
 			
 			return false;
 		} 

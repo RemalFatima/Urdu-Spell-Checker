@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.cj.conf.ConnectionUrlParser.Pair;
 
 import dataAccessLayer.IWordDAO;
@@ -23,6 +25,7 @@ import transferObject.Words;
 
 public class MutantGenerator implements IMutantGenerator {
 	
+	static Logger logger = Logger.getLogger(MutantGenerator.class);
 	
 	// Groups
 	private String[] group1List = {"ا","ع","آ"};
@@ -243,11 +246,15 @@ public class MutantGenerator implements IMutantGenerator {
 							generate(newList,word);
 						}
 					}
+					
+					logger.debug("Mutant created " + temp  +" for word "+  word);
 
 
 				}
 
 			} }catch(Exception e) {
+				logger.info("Failed to create mutant in function createMutant() in BLL MutantGenerator");
+				logger.warn(e.getMessage());
 
 			}
 
@@ -256,17 +263,18 @@ public class MutantGenerator implements IMutantGenerator {
 
 	// apply mutation to each word passed in paramters
 	public void applyMutation(Words words) {
+		
 		for(String word : words.getWords().keySet()) { // Read each word
 			mutantList.clear();
 			String temp = word;
-
-
-
-
 			try {
 
 				createMutant(temp,word);
-			} catch(Exception e) {}
+			} catch(Exception e) {
+				
+				logger.info("Failed to create mutant in function applyMutation() in BLL MutantGenerator");
+				logger.warn(e.getMessage());
+			}
 			for(String key : mutantList.keySet()) {
 
 				if(!mutants.containsMutant(key, word)) {

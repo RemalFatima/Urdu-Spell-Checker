@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.xml.parsers.*;
+
+import org.apache.log4j.Logger;
 import org.w3c.dom.*;
 
 import Fascade.Fascade;
@@ -30,6 +32,7 @@ public class WordDAO implements IWordDAO {
 
 
 
+	static Logger logger = Logger.getLogger(WordDAO.class);
 
 
 	// Insert data into content table ( title , author , content in file )
@@ -51,8 +54,9 @@ public class WordDAO implements IWordDAO {
 			Count.num += 1;
 
 		} catch (SQLException ex) {
-			System.out.println(ex.getMessage());
-			System.out.println("Error in inserting content into table `Content` - Function insertContent in WordDAO");
+			logger.info("Error in function insertContent in DAL WORDAO");
+			logger.info(ex.getCause());
+			logger.warn(ex.getMessage());
 		}
 	}
 
@@ -101,7 +105,9 @@ public class WordDAO implements IWordDAO {
 			rs.close();
 
 		} catch (SQLException ex) {
-			System.out.println(ex.getMessage());
+			logger.info("Error in function insertWords() in DAL WordDAO");
+			logger.info(ex.getCause());
+			logger.warn(ex.getMessage());
 		}
 
 		// Remove null words from Map
@@ -129,7 +135,9 @@ public class WordDAO implements IWordDAO {
 			} catch (SQLException e) {
 
 
-				System.out.println(e.getMessage());
+				logger.info("Error in function insertWords() in DAL WordDAO");
+				logger.info(e.getCause());
+				logger.warn(e.getMessage());
 			}
 		}
 
@@ -167,7 +175,9 @@ public class WordDAO implements IWordDAO {
 						query = "INSERT INTO `WordReference` (word, FileName, FileID) VALUE ('" + key + "' ,'" + wordForeignKey.get(key) + "', " + titleID + ")";
 						st2.executeUpdate(query);
 					} catch (SQLException ex) {
-						System.out.println(ex.getMessage());
+						logger.info("Error in function insertWordsRef() in DAL WordDAO");
+						logger.info(ex.getCause());
+						logger.warn(ex.getMessage());
 					}
 				}
 				wordForeignKey.clear();
@@ -233,7 +243,9 @@ public class WordDAO implements IWordDAO {
 			}
 
 		} catch (SQLException ex) {
-			System.out.println(ex.getMessage());
+			logger.info("Error in getting data from Database");
+			logger.info(ex.getCause());
+			logger.warn(ex.getMessage());
 		}
 		return words;
 	}
@@ -258,7 +270,9 @@ public class WordDAO implements IWordDAO {
 			}
 
 		} catch (SQLException ex) {
-			System.out.println(ex.getMessage());
+			logger.info("Error in getting data from database Words");
+			logger.info(ex.getCause());
+			logger.warn(ex.getMessage());
 		}
 		return wordList;
 	}
@@ -286,8 +300,9 @@ public class WordDAO implements IWordDAO {
 
 
 		} catch (SQLException ex) {
-			System.out.println(ex.getMessage());
-			System.out.println("Error in inserting word` - Function manualAddWords in WordDAO");
+			
+			logger.info(ex.getCause());
+			logger.warn(ex.getMessage());
 		}
 
 		return true;
@@ -309,8 +324,9 @@ public class WordDAO implements IWordDAO {
 
 		} catch (SQLException e) {
 
-
-			System.out.println(e.getMessage());
+			
+			logger.info(e.getCause());
+			logger.warn(e.getMessage());
 			return false;
 		}
 		

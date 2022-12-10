@@ -237,11 +237,17 @@ public class Mainscreen extends JFrame {
                  
                 	}
                 } catch (Exception e) {
-                }
+                 
+                	}
+
             }
         });
 
 
+/*
+ * @author: Manal saqib 
+ * : modify on click mouse function to show suggestions and replace it with menu 
+ */
 		textArea.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -292,14 +298,18 @@ public class Mainscreen extends JFrame {
 		spellCheckPanel.add(lblNewLabel);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBackground(Color.CYAN);
+
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+
 
 		JTextArea textArea_1 = new JTextArea();
 		textArea_1.setBounds(296, 182, 287, 250);
 		//spellCheckPanel.add(textArea_1);
 		JScrollPane sp = new JScrollPane (textArea_1,JScrollPane .VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		spellCheckPanel.add(sp);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(734, 182, 165, 459);
 		spellCheckPanel.add(scrollPane_1);
@@ -317,6 +327,16 @@ public class Mainscreen extends JFrame {
 		spellCheckPanel.add(lblNewLabel_3);
 
 		
+
+		suggestionTextArea = new JTextPane();
+		suggestionTextArea.setBounds(734, 182, 165, 459);
+		spellCheckPanel.add(suggestionTextArea);
+		suggestionTextArea.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 20));
+		suggestionTextArea.setForeground(new Color(255, 255, 255));
+		suggestionTextArea.setBackground(new Color(0, 0, 72));
+
+
+
 
 		JPanel importPanel = new JPanel();
 		importPanel.setBackground(new Color(34, 46, 66));

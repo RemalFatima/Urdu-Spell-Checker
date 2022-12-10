@@ -9,6 +9,8 @@ package buisnessLayer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
+
 import Fascade.Fascade;
 import Fascade.IFascade;
 import dataAccessLayer.IWordDAO;
@@ -16,6 +18,8 @@ import dataAccessLayer.WordDAO;
 import transferObject.Words;
 
 public class Corrector implements ICorrector {
+
+	static Logger logger = Logger.getLogger(Corrector.class);
 	IFascade dalFascade ;
 	Words words = new Words();
 	/*
@@ -26,12 +30,18 @@ public class Corrector implements ICorrector {
 		dalFascade = new Fascade();
 		words = dalFascade.getAllWords();
 		ArrayList<String> incorrectWords = new ArrayList<String>();
-		for(String word : sentence.split(" ")) {
-			if(!words.getWords().containsKey(word))
-			{
-				incorrectWords.add(word);	
+		try {
+			for(String word : sentence.split(" ")) {
+				if(!words.getWords().containsKey(word))
+				{
+					incorrectWords.add(word);	
 
+				}
 			}
+		} catch(Exception e) {
+			logger.info("Error in function IncorrectWords() in BLL Corrector");
+			logger.info(e.getCause());
+			logger.warn(e.getMessage());
 		}
 		return incorrectWords;
 	}
@@ -43,11 +53,17 @@ public class Corrector implements ICorrector {
 		dalFascade = new Fascade();
 		words = dalFascade.getAllWords();
 		ArrayList<String> correctWords = new ArrayList<String>();
-		for(String word : sentence.split(" ")) {
-			if(words.getWords().containsKey(word))
-			{
-				correctWords.add(word);	
+		try {
+			for(String word : sentence.split(" ")) {
+				if(words.getWords().containsKey(word))
+				{
+					correctWords.add(word);	
+				}
 			}
+		}catch(Exception e) {
+			logger.info("Error in function IncorrectWords() in BLL Corrector");
+			logger.info(e.getCause());
+			logger.warn(e.getMessage());
 		}
 		return correctWords;
 	}

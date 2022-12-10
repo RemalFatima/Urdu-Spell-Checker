@@ -1,5 +1,7 @@
 package buisnessLayer;
 
+import org.apache.log4j.Logger;
+
 import Fascade.Fascade;
 import Fascade.IFascade;
 import dataAccessLayer.IMutantDAO;
@@ -14,6 +16,8 @@ import dataAccessLayer.WordDAO;
 
 public class DataInserter implements IDataInserter {
 	
+	static Logger logger = Logger.getLogger(DataInserter.class);
+	
 	private IFascade dalFascade;
 	
 	
@@ -22,10 +26,14 @@ public class DataInserter implements IDataInserter {
 	public void insertBuiltInData(String path,boolean wordRefEnter) {
 		dalFascade = new Fascade();
 		dalFascade.insertBuiltInData(path);
-		if(wordRefEnter)
+		if(wordRefEnter) {
 			dalFascade.insertWordRef();
-		
+			logger.info("Ignoring Word references");
+			
+		}
 		dalFascade.insertBuiltInMutants();
+		logger.info("Word mutants started generating");
+		
 		
 	}
 	
