@@ -294,7 +294,27 @@ public class WordDAO implements IWordDAO {
 	}
 
 	
-	
+	// updates word in database
+	@Override
+	public boolean updateWord(wordTableData data) {
+		try {
+			Statement st = DBhandler.getInstance().getConnection().createStatement();
+			
+			 
+				String query = "Update Words set word = '" + data.getWord() + "' Where wordID = " + data.getId() + "";
+				st.executeUpdate(query);
+				System.out.println("updated");
+				return true;
+			
+
+		} catch (SQLException e) {
+
+
+			System.out.println(e.getMessage());
+			return false;
+		}
+		
+	}
 
 
 
