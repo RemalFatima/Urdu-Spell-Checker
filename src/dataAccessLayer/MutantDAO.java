@@ -22,119 +22,102 @@ import transferObject.Words;
  */
 
 public class MutantDAO implements IMutantDAO {
-	
-	String url = "jdbc:mysql://localhost:3307/content?useSSL=false";
-    String user = "root";
-    String password = "";
-    
-    private IFascade bllFascade;
-	 
-    /*
-     * Author Absar Ali ( 20F-0232)
-     * Function to insert mutant into database
-     */
-    
-    // insert mutants for builtin words
-    @Override
+
+
+	private IFascade bllFascade;
+
+	/*
+	 * Author Absar Ali ( 20F-0232)
+	 * Function to insert mutant into database
+	 */
+
+	// insert mutants for builtin words
+	@Override
 	public void insertBuiltInMutants() {
-    	
-    	bllFascade = new Fascade();
-    	Mutants mutants =  new Mutants();
-  
-    	String query ;
-    	Connection con = null;
-    	try {
-			con = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	Words wordList = bllFascade.getAllWords();
-    	for( String word : wordList.getWords().keySet()) {
-    		mutants.getMutant().clear();
-    		Words _word = new Words();
-    		_word.put(word, wordList.getWords().get(word));
-    		mutants = bllFascade.generateMutants(_word);
-    		System.out.println(mutants.getMutant().size() + " size ");
-    		for(Mutant mutant : mutants.getMutant()) {
-			try {
-				Count.num += 1;
-				Statement st = con.createStatement();
-				//System.out.println(key.getCorrectWord());
-				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + mutant.getMutantString()+ "' ,'" + mutant.getCorrectWord() + "')";
-				st.executeUpdate(query);
-				
-			} catch (SQLException e) {
-				
-				System.out.println(e.getMessage());
+
+		bllFascade = new Fascade();
+		Mutants mutants =  new Mutants();
+
+		String query ;
+
+		Words wordList = bllFascade.getAllWords();
+		for( String word : wordList.getWords().keySet()) {
+			mutants.getMutant().clear();
+			Words _word = new Words();
+			_word.put(word, wordList.getWords().get(word));
+			mutants = bllFascade.generateMutants(_word);
+			System.out.println(mutants.getMutant().size() + " size ");
+			for(Mutant mutant : mutants.getMutant()) {
+				try {
+					Count.num += 1;
+					Statement st = DBhandler.getInstance().getConnection().createStatement();
+					//System.out.println(key.getCorrectWord());
+					query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + mutant.getMutantString()+ "' ,'" + mutant.getCorrectWord() + "')";
+					st.executeUpdate(query);
+
+				} catch (SQLException e) {
+
+					System.out.println(e.getMessage());
+				}
 			}
-    		}
-    	}
-    }
-    
-    // generate mutants for manually added words
- 
-    @Override
-	public boolean manualWordMutant(String word)
-    {
-    	bllFascade = new Fascade();
-    	Mutants mutants = new Mutants();
-    	Words words = new Words();
-    	words.put(word, 3);
-    	mutants = bllFascade.generateMutants(words);
-    	Connection con = null;
-    	String query = "INSERT INTO `Words` (word, frequency) VALUE ('" + word + "' ," + 1 + ")";
-    	
-    	try {
-			con = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
 		}
-    	
-    	for(Mutant key : mutants.getMutant()) {
+	}
+
+	// generate mutants for manually added words
+
+	@Override
+	public boolean manualWordMutant(String word)
+	{
+		bllFascade = new Fascade();
+		Mutants mutants = new Mutants();
+		Words words = new Words();
+		words.put(word, 3);
+		mutants = bllFascade.generateMutants(words);
+		String query = "INSERT INTO `Words` (word, frequency) VALUE ('" + word + "' ," + 1 + ")";
+
+
+		for(Mutant key : mutants.getMutant()) {
 			try {
-				
-				Statement st = con.createStatement();
+
+				Statement st = DBhandler.getInstance().getConnection().createStatement();
 				query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + key.getMutantString() + "' ,'" + key.getCorrectWord() + "')";
 				st.executeUpdate(query);
-				
+
 			} catch (SQLException e) {
-				
+
 				System.out.println(e.getMessage());
 				return false;
 			}
-    	}
-    	
-    	return true;
-    }
- 
-    // Get all mutants from database
-    @Override
-	public Mutants getAllMutants() {
-		
-     String query = "SELECT * FROM `mutants`";
+		}
 
-     Mutants mutants = new Mutants();
-   
-     
-     try {
-     	Connection con = DriverManager.getConnection(url, user, password);
-     	Statement st = con.createStatement();
-         ResultSet rs = st.executeQuery(query);
-         while (rs.next()) {
-         	
-         	
-         	mutants.put(rs.getString(1),rs.getString(2));
-
-         }
-
-     } catch (SQLException ex) {
-         System.out.println(ex.getMessage());
-     }
-     return mutants;
+		return true;
 	}
-   
+
+	// Get all mutants from database
+	@Override
+	public Mutants getAllMutants() {
+
+		String query = "SELECT * FROM `mutants`";
+
+		Mutants mutants = new Mutants();
+
+
+		try {
+
+			Statement st = DBhandler.getInstance().getConnection().createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while (rs.next()) {
+
+
+				mutants.put(rs.getString(1),rs.getString(2));
+
+			}
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+		return mutants;
+	}
+
 
 }

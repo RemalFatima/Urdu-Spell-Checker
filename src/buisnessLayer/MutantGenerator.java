@@ -34,7 +34,7 @@ public class MutantGenerator implements IMutantGenerator {
 	private String[] group9List = {"ض","ظ"};
 	private String[] group10List = {"گ","غ"};
 	private String[] group11List = {"ک","ق"};
-	
+
 	private ArrayList<String> group1 = new ArrayList<String>();
 	private ArrayList<String> group2 = new ArrayList<String>();
 	private ArrayList<String> group3 = new ArrayList<String>();
@@ -46,12 +46,12 @@ public class MutantGenerator implements IMutantGenerator {
 	private ArrayList<String> group9 = new ArrayList<String>();
 	private ArrayList<String> group10 = new ArrayList<String>();
 	private ArrayList<String> group11 = new ArrayList<String>();
-	
+
 	Mutants mutants = new Mutants();
 	HashMap<String,String> mutantList = new HashMap<String,String>();
 	int b = 0;
 
-	
+
 	public MutantGenerator() {
 		group1.addAll(Arrays.asList(group1List));
 		group2.addAll(Arrays.asList(group2List));
@@ -69,39 +69,39 @@ public class MutantGenerator implements IMutantGenerator {
 	// Create Mutants 
 	@Override
 	public Mutants generateMutants(Words _wordsList) {
-		
-		    	 Words words = _wordsList;
-		 		
-		 		try {
-		 		applyMutation(_wordsList);
-		 		} catch(Exception e) {};
-		 		
-		 		
-		 		//System.out.println("test");
-		 		Count.num += 100000;
-		 	//	mutants.setMutant(mutantList); // store all mutants in hashmap
-		 		//		for(String key : mutants.getMutant().keySet())
-		 		//		{
-		 		//			System.out.println(key);
-		 		//		}
 
-		 		
-					
-		     
+		Words words = _wordsList;
+
+		try {
+			applyMutation(_wordsList);
+		} catch(Exception e) {};
+
+
+		//System.out.println("test");
+		Count.num += 100000;
+		//	mutants.setMutant(mutantList); // store all mutants in hashmap
+		//		for(String key : mutants.getMutant().keySet())
+		//		{
+		//			System.out.println(key);
+		//		}
+
+
+
+
 
 		return mutants;
 
-		
+
 
 	}
 
 
 	public HashMap<String , String> replaceCharacters( int index, String mutant, String word, ArrayList<String> group) {
 		HashMap<String , String> mutantList = new HashMap<String,String>();
-		
+
 		if(group == group3)
 		{
-			
+
 			StringBuilder strBuilder = new StringBuilder(mutant);
 			char c;
 			c = strBuilder.charAt(index);
@@ -110,193 +110,193 @@ public class MutantGenerator implements IMutantGenerator {
 			//strBuilder.insert(index, c);
 			mutant = strBuilder.toString();
 			mutantList.put(mutant, word);
-			
+
 		}
 		else if(group == group2)
 		{
 			StringBuilder strBuilder = new StringBuilder(mutant);
 			strBuilder.deleteCharAt(index);
 			mutant = strBuilder.toString();
-		//	System.out.println(mutant + "Deleted ھ");
+			//	System.out.println(mutant + "Deleted ھ");
 			mutantList.put(mutant, word);
 		}
-		
+
 		else {
-		for(String letters :  group) {
-		StringBuilder strBuilder = new StringBuilder(mutant);
-		strBuilder.deleteCharAt(index);
-		strBuilder.insert(index,letters);
-		mutant = strBuilder.toString();
-		mutantList.put(mutant, word);
+			for(String letters :  group) {
+				StringBuilder strBuilder = new StringBuilder(mutant);
+				strBuilder.deleteCharAt(index);
+				strBuilder.insert(index,letters);
+				mutant = strBuilder.toString();
+				mutantList.put(mutant, word);
+			}
 		}
-		}
-		
-	//	System.out.println("New List of " + word);
-	//	for(String key : mutantList.keySet())
+
+		//	System.out.println("New List of " + word);
+		//	for(String key : mutantList.keySet())
 		//	System.out.println(key + " " + mutantList.get(key));
 		return mutantList;
 	}
-	
+
 	public void createMutant(String temp,String word)
 	{
-		
+
 		try {
-		for(int i = 0; i < temp.length(); i++) {
+			for(int i = 0; i < temp.length(); i++) {
 
-			{
-				
-				if(temp.charAt(i) == 'ا' || temp.charAt(i) == 'ع' || temp.charAt(i) == 'آ') {
-					
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group1);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-					
+				{
+
+					if(temp.charAt(i) == 'ا' || temp.charAt(i) == 'ع' || temp.charAt(i) == 'آ') {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group1);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+
+						}
 					}
-				}
-				
-				else if((temp.charAt(i) == 'ب' || temp.charAt(i) == 'پ'
-						|| temp.charAt(i) == 'ٹ' || temp.charAt(i) == 'ج' || temp.charAt(i) == 'ج'
-						|| temp.charAt(i) == 'د' || temp.charAt(i) == 'ڈ' || temp.charAt(i) == 'ر'
-						|| temp.charAt(i) == 'ڑ' || temp.charAt(i) == 'م' || temp.charAt(i) == 'ل'
-						)  && i+1 < temp.length() && temp.charAt(i+1) == 'ھ') {
 
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i+1,temp,word,group2);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
+					else if((temp.charAt(i) == 'ب' || temp.charAt(i) == 'پ'
+							|| temp.charAt(i) == 'ٹ' || temp.charAt(i) == 'ج' || temp.charAt(i) == 'ج'
+							|| temp.charAt(i) == 'د' || temp.charAt(i) == 'ڈ' || temp.charAt(i) == 'ر'
+							|| temp.charAt(i) == 'ڑ' || temp.charAt(i) == 'م' || temp.charAt(i) == 'ل'
+							)  && i+1 < temp.length() && temp.charAt(i+1) == 'ھ') {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i+1,temp,word,group2);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							if(mutantList.size() > 1000)
+								break;
+							generate(newList,word);
+							temp = word;
+						}
+					}
+
+					else if((temp.charAt(i) == 'ب' || temp.charAt(i) == 'پ' 
+							|| temp.charAt(i) == 'ٹ' || temp.charAt(i) == 'ج' || temp.charAt(i) == 'ج'
+							|| temp.charAt(i) == 'د' || temp.charAt(i) == 'ڈ'  || temp.charAt(i) == 'م' || temp.charAt(i) == 'ل' ) ) {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group3);
 						if(mutantList.size() > 1000)
 							break;
-						generate(newList,word);
-						temp = word;
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+							temp = word;
+						}
 					}
-				}
-				
-				else if((temp.charAt(i) == 'ب' || temp.charAt(i) == 'پ' 
-						|| temp.charAt(i) == 'ٹ' || temp.charAt(i) == 'ج' || temp.charAt(i) == 'ج'
-						|| temp.charAt(i) == 'د' || temp.charAt(i) == 'ڈ'  || temp.charAt(i) == 'م' || temp.charAt(i) == 'ل' ) ) {
 
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group3);
-					if(mutantList.size() > 1000)
-						break;
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-						temp = word;
-					}
-				}
-					
-				
-				else if(temp.charAt(i) == 'ت' || temp.charAt(i) == 'ط' ) {
-					
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group4);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-					}
-				}
-				else if(temp.charAt(i) == 'ح' || temp.charAt(i) == 'ہ' || temp.charAt(i) == 'ۃ') {
-					
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group5);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-					}
-				}
-				else if(temp.charAt(i) == 'ذ' || temp.charAt(i) == 'ز') {
-					
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group7);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-					}
-				}
-				else if(temp.charAt(i) == 'س' || temp.charAt(i) == 'ص'|| temp.charAt(i) == 'ث') {
-					
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group8);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-					}
-				}
-				else if(temp.charAt(i) == 'ض' || temp.charAt(i) == 'ظ') {
-					
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group9);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-					}
-				}
-				else if(temp.charAt(i) == 'گ' || temp.charAt(i) == 'غ') {
-					
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group10);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-					}
-				}
-				else if(temp.charAt(i) == 'ق' || temp.charAt(i) == 'ک') {
-					
-					HashMap<String,String> newList = new HashMap<String,String>();
-					newList = replaceCharacters(i,temp,word,group11);
-					if(!containsAll(mutantList,newList)) {
-						newList = unique(mutantList,newList);
-						generate(newList,word);
-					}
-				}
-				
-						
-				}
-				
-		} }catch(Exception e) {
-			
-		}
 
-			
+					else if(temp.charAt(i) == 'ت' || temp.charAt(i) == 'ط' ) {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group4);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+						}
+					}
+					else if(temp.charAt(i) == 'ح' || temp.charAt(i) == 'ہ' || temp.charAt(i) == 'ۃ') {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group5);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+						}
+					}
+					else if(temp.charAt(i) == 'ذ' || temp.charAt(i) == 'ز') {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group7);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+						}
+					}
+					else if(temp.charAt(i) == 'س' || temp.charAt(i) == 'ص'|| temp.charAt(i) == 'ث') {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group8);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+						}
+					}
+					else if(temp.charAt(i) == 'ض' || temp.charAt(i) == 'ظ') {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group9);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+						}
+					}
+					else if(temp.charAt(i) == 'گ' || temp.charAt(i) == 'غ') {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group10);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+						}
+					}
+					else if(temp.charAt(i) == 'ق' || temp.charAt(i) == 'ک') {
+
+						HashMap<String,String> newList = new HashMap<String,String>();
+						newList = replaceCharacters(i,temp,word,group11);
+						if(!containsAll(mutantList,newList)) {
+							newList = unique(mutantList,newList);
+							generate(newList,word);
+						}
+					}
+
+
+				}
+
+			} }catch(Exception e) {
+
+			}
+
+
 	}
-	
+
 	public void applyMutation(Words words) {
 		for(String word : words.getWords().keySet()) { // Read each word
 			mutantList.clear();
 			String temp = word;
-			
-			
-			
+
+
+
 
 			try {
-				
-			createMutant(temp,word);
+
+				createMutant(temp,word);
 			} catch(Exception e) {}
 			for(String key : mutantList.keySet()) {
-					
-						if(!mutants.containsMutant(key, word)) {
-						mutants.put(key, word);
-						
+
+				if(!mutants.containsMutant(key, word)) {
+					mutants.put(key, word);
+
 					//	b++;
 					//	System.out.println(b);
-						
-						
-						
-					}
-						
-				
-			
-					
+
 
 
 				}
-				//System.out.println(b);
+
+
+
+
+
+
 			}
+			//System.out.println(b);
+		}
 	}
-	
+
 	private void generate(HashMap<String,String> newList, String word) {
 		//System.out.println(!containsAll(mutantList,newList));
 		mutantList.putAll(newList);
@@ -305,12 +305,12 @@ public class MutantGenerator implements IMutantGenerator {
 	}
 
 	private boolean containsAll(HashMap<String , String> map1, HashMap<String , String> map2) {
-		
+
 		if(map1.keySet().containsAll(map2.keySet()))
 			return true;
 		return false;
-		
-					
+
+
 	}
 	private HashMap<String,String> unique(HashMap<String,String> map1, HashMap<String,String> map2)
 	{
@@ -319,7 +319,7 @@ public class MutantGenerator implements IMutantGenerator {
 		{
 			if(!map1.keySet().contains(key)) {
 				newList.put(key, map2.get(key));
-				
+
 				//System.out.println(key);
 			}
 		}

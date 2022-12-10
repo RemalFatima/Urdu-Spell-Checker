@@ -10,7 +10,7 @@ public interface IWordDAO {
 
 	// Insert data into content table ( title , author , content in file )
 	// Author  : Remal Fatima
-	void insertContent(File file, Connection con);
+	void insertContent(File file);
 
 	HashMap<String, Integer> getWords(String content, String title);
 

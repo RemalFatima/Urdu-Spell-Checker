@@ -1,7 +1,7 @@
-/presentationLayer/
-/buisnessLayer/
-/transferObject/
-/TestCases/
-/dataAccessLayer/
 /Fascade/
+/TestCases/
+/buisnessLayer/
+/dataAccessLayer/
 /images/
+/presentationLayer/
+/transferObject/
