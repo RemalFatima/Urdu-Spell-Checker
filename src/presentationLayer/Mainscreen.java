@@ -98,11 +98,12 @@ public class Mainscreen extends JFrame {
 	private JTextField freqField;
 	int row,column;
 	
+	
 
 	// Highlight incorrect words from JTextPane by deleting old text and overwriting with new text
 
 	public void highlight() {
-		//textArea.setText(  "  یہ خُون میں آکسیجَن کو مِلاتا ہے جِس   "); 
+		suggestionTextArea.setText(  "خودکار تصحیح"); 
 		String oldSentence = textArea.getText();
 		oldSentence = oldSentence.replaceAll("(?U)[\\W_]+", " ");
 

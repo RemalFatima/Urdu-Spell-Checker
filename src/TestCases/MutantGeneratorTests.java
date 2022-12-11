@@ -2,7 +2,14 @@ package TestCases;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 
 import buisnessLayer.IMutantGenerator;
 import buisnessLayer.MutantGenerator;
@@ -12,6 +19,8 @@ import transferObject.Words;
 
 public class MutantGeneratorTests {
 
+	
+	
 	/*
 	 * Author : Absar Ali 20F-0232
 	 * Test cases for class Mutant Generator
@@ -26,22 +35,28 @@ public class MutantGeneratorTests {
 	 */
 
 	//When the word have mutants
+	
+	MutantGenerator mutantGenerator = new MutantGenerator();
+		
+	
 	@Test
 	public void generateMutantValidWord() {
 		
-		IMutantGenerator mutantGenerator = new MutantGenerator();
+		mutantGenerator = new MutantGenerator();
 		Mutants mutant = new Mutants();
 		Words word = new Words();
-		word.put("عام",5);
+		word.put("نام",5);
 		mutant = mutantGenerator.generateMutants(word);
+		word.getWords().clear();
 		Mutants result = new Mutants();
-		result.put("اام","عام");
-		result.put("ععم", "عام");
-		result.put("اعم", "عام");
+		word.put("اام", 5);
+		result = mutantGenerator.generateMutants(word);
+
+
 		for(Mutant word1 : mutant.getMutant()) {
 			System.out.println(word1.getMutantString());
 		}
-		assertEquals(mutant.getMutant(),result.getMutant());
+		assertTrue(result.getMutant().containsAll(mutant.getMutant()));
 		
 		
 	}
@@ -50,7 +65,7 @@ public class MutantGeneratorTests {
 	@Test
 	public void generateMutantInvalidWord() {
 		
-		IMutantGenerator mutantGenerator = new MutantGenerator();
+		
 		Mutants mutant = new Mutants();
 		Words word = new Words();
 		word.put("",5);
@@ -64,7 +79,7 @@ public class MutantGeneratorTests {
 		@Test
 		public void generateMutantNoWord() {
 			
-			IMutantGenerator mutantGenerator = new MutantGenerator();
+			
 			Mutants mutant = new Mutants();
 			Words word = new Words();
 			mutant = mutantGenerator.generateMutants(word);
@@ -74,5 +89,23 @@ public class MutantGeneratorTests {
 		}
 	
 	
+	
+	@Test
+	@DisplayName (" Testing replaceCharacters function for groups which changes 1 character at a time ") 
+	public void testReplaceCharactersForSingleCharacter() {
+		
+		String word = "عام";
+		String mutant = word;
+		String[] group1List = {"ا","ع","آ"};
+		ArrayList<String> group1 = new ArrayList<String>();
+		group1.addAll(Arrays.asList(group1List));
+		HashMap<String , String> map1 = mutantGenerator.replaceCharacters(0, mutant, word, group1);
+		HashMap<String , String> map2 = new HashMap<String , String>();
+		map2.put("عام", word);
+		map2.put("اام", word);
+		map2.put("آام", word);
+		assertEquals(map1, map2);
+	}
 
+	
 }

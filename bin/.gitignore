@@ -1,3 +1,6 @@
-/log4j.properties
+/Fascade/
+/TestCases/
 /buisnessLayer/
 /dataAccessLayer/
+/presentationLayer/
+/transferObject/
