@@ -227,7 +227,7 @@ public class Mainscreen extends JFrame {
                     int start = Utilities.getWordStart(textArea,textArea.getCaretPosition());
                     int end = Utilities.getWordEnd(textArea, textArea.getCaretPosition());
                     String text = textArea.getDocument().getText(start, end - start);
-                    System.out.println(text);
+                  //  System.out.println(text);
                     ArrayList<String> wordList = suggestions.autoCorrection(text);
                     if(wordList.size() >= 1)
                     {
