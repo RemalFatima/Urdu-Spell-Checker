@@ -51,7 +51,7 @@ public class WordDAO implements IWordDAO {
 			// execute query
 			Statement st =DBhandler.getInstance().getConnection().createStatement();
 			st.executeUpdate(query);
-			Count.num += 1;
+
 
 		} catch (SQLException ex) {
 			logger.info("Error in function insertContent in DAL WORDAO");
@@ -264,7 +264,7 @@ public class WordDAO implements IWordDAO {
 			while (rs.next()) {
 
 				wordTableData TB = new wordTableData();
-				
+
 				TB.put(Integer.parseInt(rs.getString(1)), rs.getString(2),Integer.parseInt(rs.getString(3)));
 				wordList.add(TB);
 			}
@@ -300,7 +300,7 @@ public class WordDAO implements IWordDAO {
 
 
 		} catch (SQLException ex) {
-			
+
 			logger.info(ex.getCause());
 			logger.warn(ex.getMessage());
 		}
@@ -308,28 +308,28 @@ public class WordDAO implements IWordDAO {
 		return true;
 	}
 
-	
+
 	// updates word in database
 	@Override
 	public boolean updateWord(wordTableData data) {
 		try {
 			Statement st = DBhandler.getInstance().getConnection().createStatement();
-			
-			 
-				String query = "Update Words set word = '" + data.getWord() + "' Where wordID = " + data.getId() + "";
-				st.executeUpdate(query);
-				System.out.println("updated");
-				return true;
-			
+
+
+			String query = "Update Words set word = '" + data.getWord() + "' Where wordID = " + data.getId() + "";
+			st.executeUpdate(query);
+			System.out.println("updated");
+			return true;
+
 
 		} catch (SQLException e) {
 
-			
+
 			logger.info(e.getCause());
 			logger.warn(e.getMessage());
 			return false;
 		}
-		
+
 	}
 
 

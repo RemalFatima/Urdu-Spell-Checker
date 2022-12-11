@@ -17,6 +17,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.Utilities;
 
+import org.apache.log4j.Logger;
 
 import Fascade.Fascade;
 import Fascade.IFascade;
@@ -81,6 +82,8 @@ import java.awt.event.InputMethodEvent;
 
 
 public class Mainscreen extends JFrame {
+	
+	static Logger logger = Logger.getLogger(Mainscreen.class);
 
 	private JPanel contentPane;
 	private JTextPane textArea = new JTextPane();
@@ -98,12 +101,11 @@ public class Mainscreen extends JFrame {
 	private JTextField freqField;
 	int row,column;
 	
-	
 
 	// Highlight incorrect words from JTextPane by deleting old text and overwriting with new text
 
 	public void highlight() {
-		suggestionTextArea.setText(  "خودکار تصحیح"); 
+		//textArea.setText(  "  یہ خُون میں آکسیجَن کو مِلاتا ہے جِس   "); 
 		String oldSentence = textArea.getText();
 		oldSentence = oldSentence.replaceAll("(?U)[\\W_]+", " ");
 
@@ -196,6 +198,7 @@ public class Mainscreen extends JFrame {
 		checkBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				highlight();
+				JOptionPane.showMessageDialog(new JFrame(), "The wrong words have been highlighted"," Check Please", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		checkBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -263,8 +266,8 @@ public class Mainscreen extends JFrame {
 					wrd=textArea.getSelectedText();
 					suggestionTextArea.setText("");
 					JPopupMenu popupmenu = new JPopupMenu("Words");  
-					if(suggestions.suggestionWords(wrd).size() >= 1) {
-					for(Mutant mutant : suggestions.suggestionWords(wrd)) {
+					if(suggestions.suggestWords(wrd).size() >= 1) {
+					for(Mutant mutant : suggestions.suggestWords(wrd)) {
 						
 						//appendToPane(suggestionTextArea,mutant.getCorrectWord(),Color.white);
 						 
@@ -284,7 +287,9 @@ public class Mainscreen extends JFrame {
 				}
 				catch(Exception e1)
 				{
-					e1.printStackTrace();
+					logger.info("Error in showing mutants in menus");
+					logger.info(e1.getCause());
+					logger.warn(e1.getMessage());
 				}
 			}
 		});
@@ -371,7 +376,7 @@ public class Mainscreen extends JFrame {
 					public void run() {
 						DataInserter dataInserter = new DataInserter();
 						dataInserter.insertBuiltInData(xmlDataPathTextField.getText(), wordRefChkBtn.isSelected() );
-
+						JOptionPane.showMessageDialog(new JFrame(), "The data has successfully imported","Updated", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}).start();
 
@@ -413,6 +418,7 @@ public class Mainscreen extends JFrame {
 					DataInserter dataInserter = new DataInserter();
 					dataInserter.insertManualWord(userNameTextField.getText(), WordTextField.getText());
 					dataInserter.insertManualMutants(WordTextField.getText());
+					JOptionPane.showMessageDialog(new JFrame(), "The word has successfully added","Updated", JOptionPane.INFORMATION_MESSAGE);
 
 				}
 			}
@@ -449,10 +455,11 @@ public class Mainscreen extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				 row = table.getSelectedRow();
 				 column = table.getSelectedColumn();
+				 if(column == 1) {
 				idField.setText(table.getValueAt(row, 0).toString());
 				wordField.setText( table.getValueAt(row, column).toString());
 				freqField.setText(table.getValueAt(row, 2).toString());
-				
+				 }
 				
 			}
 		});
@@ -529,7 +536,7 @@ public class Mainscreen extends JFrame {
 						IWordTableManager tableManager = new WordTableManager();
 						tableManager.update(Integer.parseInt(idField.getText()), editField.getText(), Integer.parseInt(freqField.getText()));
 						table.setValueAt(editField.getText(), row, column);
-						JOptionPane.showMessageDialog(new JFrame(), "The word has successfully edited","Updated", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(new JFrame(), "Your request has been submited","Request Change", JOptionPane.INFORMATION_MESSAGE);
 					}
 				else {
 					JOptionPane.showMessageDialog(new JFrame(), "Select a word to update","Updated", JOptionPane.WARNING_MESSAGE);

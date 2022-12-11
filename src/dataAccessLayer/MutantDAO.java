@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 import Fascade.Fascade;
 import Fascade.IFascade;
 import buisnessLayer.Count;
@@ -25,9 +27,9 @@ public class MutantDAO implements IMutantDAO {
 
 
 	private IFascade bllFascade;
+	static Logger logger = Logger.getLogger(MutantDAO.class);
 
 	/*
-	 * Author Absar Ali ( 20F-0232)
 	 * Function to insert mutant into database
 	 */
 
@@ -49,15 +51,16 @@ public class MutantDAO implements IMutantDAO {
 			System.out.println(mutants.getMutant().size() + " size ");
 			for(Mutant mutant : mutants.getMutant()) {
 				try {
-					Count.num += 1;
 					Statement st = DBhandler.getInstance().getConnection().createStatement();
 					//System.out.println(key.getCorrectWord());
 					query = "INSERT INTO `Mutants` (mutant, CorrectWord) VALUE ('" + mutant.getMutantString()+ "' ,'" + mutant.getCorrectWord() + "')";
 					st.executeUpdate(query);
 
-				} catch (SQLException e) {
+				} catch (SQLException ex) {
 
-					System.out.println(e.getMessage());
+					logger.info("Error in function insertContent in DAL MUTANTDAO");
+					logger.info(ex.getCause());
+					logger.warn(ex.getMessage());
 				}
 			}
 		}

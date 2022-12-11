@@ -1,8 +1,11 @@
 
 
-/*
-	 * @Author : Manal saqib  20F-0141  
-	
+	/*
+	 *	 @Author : Manal saqib  20F-0141  
+	 *	 Added function suggestWords
+	 * 
+	 *	 @Author : AbsarAli  20F-0232 
+	 *   Auto corrector function to show the auto completion with 3 edit distance
 	 * 
 	 */
 package buisnessLayer;
@@ -41,12 +44,15 @@ public class SuggestionWords {
 					logger.info("Error in creating object of SuggestionWords");
 					logger.info(e.getCause());
 					logger.warn(e.getMessage());
+					
 				}
 			}
 		}).start();
-
+		
 	}
-	public ArrayList<Mutant> suggestionWords(String word) {
+	
+	
+	public ArrayList<Mutant> suggestWords(String word) {
 
 		ArrayList<Mutant> list = new ArrayList<Mutant>();
 		try {
