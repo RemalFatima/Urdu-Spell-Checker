@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 
 import Fascade.Fascade;
 import Fascade.IFascade;
-import buisnessLayer.Count;
 import buisnessLayer.IMutantGenerator;
+import buisnessLayer.Log;
 import buisnessLayer.MutantGenerator;
 import transferObject.Mutant;
 import transferObject.Mutants;
@@ -27,7 +27,7 @@ public class MutantDAO implements IMutantDAO {
 
 
 	private IFascade bllFascade;
-	static Logger logger = Logger.getLogger(MutantDAO.class);
+	//static Log.logger Log.logger = Log.logger.getLog.logger(MutantDAO.class);
 
 	/*
 	 * Function to insert mutant into database
@@ -58,9 +58,9 @@ public class MutantDAO implements IMutantDAO {
 
 				} catch (SQLException ex) {
 
-					logger.info("Error in function insertContent in DAL MUTANTDAO");
-					logger.info(ex.getCause());
-					logger.warn(ex.getMessage());
+					Log.logger.info("Error in function insertContent in DAL MUTANTDAO");
+					Log.logger.info(ex.getCause());
+					Log.logger.warn(ex.getMessage());
 				}
 			}
 		}

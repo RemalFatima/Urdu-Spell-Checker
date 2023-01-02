@@ -9,7 +9,7 @@ package buisnessLayer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
+import org.apache.log4j.*;
 
 import Fascade.Fascade;
 import Fascade.IFascade;
@@ -19,7 +19,7 @@ import transferObject.Words;
 
 public class Corrector implements ICorrector {
 
-	static Logger logger = Logger.getLogger(Corrector.class);
+	//static Log.logger Log.logger = Log.logger.getLog.logger(Corrector.class);
 	IFascade dalFascade ;
 	Words words = new Words();
 	/*
@@ -39,9 +39,9 @@ public class Corrector implements ICorrector {
 				}
 			}
 		} catch(Exception e) {
-			logger.info("Error in function IncorrectWords() in BLL Corrector");
-			logger.info(e.getCause());
-			logger.warn(e.getMessage());
+			Log.logger.info("Error in function IncorrectWords() in BLL Corrector");
+			Log.logger.info(e.getCause());
+			Log.logger.warn(e.getMessage());
 		}
 		return incorrectWords;
 	}
@@ -61,9 +61,9 @@ public class Corrector implements ICorrector {
 				}
 			}
 		}catch(Exception e) {
-			logger.info("Error in function IncorrectWords() in BLL Corrector");
-			logger.info(e.getCause());
-			logger.warn(e.getMessage());
+			Log.logger.info("Error in function IncorrectWords() in BLL Corrector");
+			Log.logger.info(e.getCause());
+			Log.logger.warn(e.getMessage());
 		}
 		return correctWords;
 	}

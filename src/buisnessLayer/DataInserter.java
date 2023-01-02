@@ -16,7 +16,7 @@ import dataAccessLayer.WordDAO;
 
 public class DataInserter implements IDataInserter {
 	
-	static Logger logger = Logger.getLogger(DataInserter.class);
+	//static Logger logger = Logger.getLogger(DataInserter.class);
 	
 	private IFascade dalFascade;
 	
@@ -25,14 +25,14 @@ public class DataInserter implements IDataInserter {
 	// Calls function to insert data into database
 	public void insertBuiltInData(String path,boolean wordRefEnter) {
 		dalFascade = new Fascade();
-		//dalFascade.insertBuiltInData(path);
+		dalFascade.insertBuiltInData(path);
 		if(wordRefEnter) {
 			dalFascade.insertWordRef();
-			logger.info("Ignoring Word references");
+			Log.logger.info("Ignoring Word references");
 			
 		}
 		dalFascade.insertBuiltInMutants();
-		logger.info("Word mutants started generating");
+		Log.logger.info("Word mutants started generating");
 		
 		
 	}

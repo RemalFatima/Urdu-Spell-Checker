@@ -137,7 +137,7 @@ public class Mainscreen extends JFrame {
 		StyleContext sc = StyleContext.getDefaultStyleContext();
 		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
 
-		aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Lucida Console");
+		aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Tahoma");
 		aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
 
 		int len = tp.getDocument().getLength();
@@ -269,14 +269,15 @@ public class Mainscreen extends JFrame {
 					if(suggestions.suggestWords(wrd).size() >= 1) {
 					for(Mutant mutant : suggestions.suggestWords(wrd)) {
 						
-						//appendToPane(suggestionTextArea,mutant.getCorrectWord(),Color.white);
+						
 						 
 						 JMenuItem suggestedWord = new JMenuItem(mutant.getCorrectWord());
 						 suggestedWord.addActionListener(new ActionListener(){  
 					            public void actionPerformed(ActionEvent e) {    
 					            	String newText = textArea.getText();
-					            	newText = newText.replaceAll(mutant.getMutantString(), suggestedWord.getText());
-					                textArea.setText(newText);
+					            	newText = newText.replace(mutant.getMutantString(), suggestedWord.getText());
+					                textArea.setText("");
+					                appendToPane(textArea, newText ,Color.white);
 					            }  
 					           });  
 						 popupmenu.add(suggestedWord);

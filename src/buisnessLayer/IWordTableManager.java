@@ -8,8 +8,8 @@ public interface IWordTableManager {
 
 	void fillTable(JTable table);
 
-	void sort(JTable table);
+	
 
-	wordTableData update(int id, String word, int frequency);
+	boolean update(int id, String word, int frequency);
 
 }

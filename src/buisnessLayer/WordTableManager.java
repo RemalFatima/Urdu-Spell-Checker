@@ -34,20 +34,21 @@ public class WordTableManager implements IWordTableManager {
 	
 	// updates data in database
 	@Override
-	public wordTableData update(int id, String word, int frequency) {
+	public boolean update(int id, String word, int frequency) {
+		try {
 		IFascade dalFascade = new Fascade();
 		wordTableData data = new wordTableData();
 		data.put(id, word, frequency);
 		dalFascade.updateWord(data);
-		return data;
+		} catch(Exception ex) {
+			
+			return false;
+		}
+		return true;
 	}
 
 
-	@Override
-	public void sort(JTable table) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 
 }

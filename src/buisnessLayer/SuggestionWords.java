@@ -29,7 +29,7 @@ import transferObject.Words;
 
 public class SuggestionWords {
 
-	static Logger logger = Logger.getLogger(SuggestionWords.class);
+	//static Logger logger = Logger.getLogger(SuggestionWords.class);
 	private IFascade dalFascade= new Fascade();
 	Mutants mutants ;
 	Words words;
@@ -41,9 +41,9 @@ public class SuggestionWords {
 				mutants = dalFascade.getAllMutants();
 				words = dalFascade.getAllWords();
 				}catch(Exception e) {
-					logger.info("Error in creating object of SuggestionWords");
-					logger.info(e.getCause());
-					logger.warn(e.getMessage());
+					Log.logger.info("Error in creating object of SuggestionWords");
+					Log.logger.info(e.getCause());
+					Log.logger.warn(e.getMessage());
 					
 				}
 			}
@@ -61,7 +61,7 @@ public class SuggestionWords {
 				list.add(mutant);
 		}
 		} catch(Exception e) {
-			logger.warn(e.getMessage());
+			Log.logger.warn(e.getMessage());
 		}
 		
 		return list;
@@ -87,9 +87,9 @@ public class SuggestionWords {
 			}
 		}
 		} catch (Exception e) {
-			logger.info("Error in function autoCorrection() in BLL SuggestionWords");
-			logger.info(e.getCause());
-			logger.warn(e.getMessage());
+			Log.logger.info("Error in function autoCorrection() in BLL SuggestionWords");
+			Log.logger.info(e.getCause());
+			Log.logger.warn(e.getMessage());
 		}
 		return autoCorrections;
 	}

@@ -25,7 +25,7 @@ import transferObject.Words;
 
 public class MutantGenerator implements IMutantGenerator {
 
-	static Logger logger = Logger.getLogger(MutantGenerator.class);
+	//static Log.logger Log.logger = Log.logger.getLog.logger(MutantGenerator.class);
 
 	// Groups
 	private String[] group1List = {"ا","ع","آ"};
@@ -228,7 +228,7 @@ public class MutantGenerator implements IMutantGenerator {
 						updateList(word, newList);
 					}
 
-					logger.debug("Mutant created " + temp  +" for word "+  word);
+					Log.logger.debug("Mutant created " + temp  +" for word "+  word);
 
 
 				}
@@ -236,8 +236,8 @@ public class MutantGenerator implements IMutantGenerator {
 
 		}catch(Exception e) {
 
-			logger.info("Failed to create mutant in function createMutant() in BLL MutantGenerator");
-			logger.warn(e.getMessage());
+			Log.logger.info("Failed to create mutant in function createMutant() in BLL MutantGenerator");
+			Log.logger.warn(e.getMessage());
 
 		}
 
@@ -338,8 +338,8 @@ public class MutantGenerator implements IMutantGenerator {
 
 			} catch(Exception e) {
 
-				logger.info("Failed to create mutant in function applyMutation() in BLL MutantGenerator");
-				logger.warn(e.getMessage());
+				Log.logger.info("Failed to create mutant in function applyMutation() in BLL MutantGenerator");
+				Log.logger.warn(e.getMessage());
 			}
 
 			for(String key : mutantList.keySet()) {

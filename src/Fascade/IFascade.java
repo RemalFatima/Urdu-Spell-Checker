@@ -62,7 +62,7 @@ public interface IFascade {
 	
 	public void fillTable(JTable table );
 	
-	public wordTableData update(int id, String word, int frequency);
+	public boolean update(int id, String word, int frequency);
 		
 	
 

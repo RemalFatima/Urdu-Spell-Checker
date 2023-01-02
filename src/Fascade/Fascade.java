@@ -116,7 +116,7 @@ public class Fascade implements IFascade {
 		return wordDAO.updateWord(data);
 	}
 	@Override
-	public wordTableData update(int id, String word, int frequency) {
+	public boolean update(int id, String word, int frequency) {
 		return tableManager.update(id, word, frequency);
 	}
 	@Override

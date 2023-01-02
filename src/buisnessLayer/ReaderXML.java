@@ -21,7 +21,7 @@ public class ReaderXML implements IReaderXML {
 	private String contentInFile;
 	
 
-	static Logger logger = Logger.getLogger(ReaderXML.class);
+	//static Logger logger = Logger.getLogger(ReaderXML.class);
 
 
 	// Reading XML File
@@ -74,9 +74,9 @@ public class ReaderXML implements IReaderXML {
 		}   
 		catch (Exception e)   
 		{  
-			logger.info("Error in Reading XML file in " + file.getName());  
-			logger.info(e.getCause());
-			logger.warn(e.getMessage());  
+			Log.logger.info("Error in Reading XML file in " + file.getName());  
+			Log.logger.info(e.getCause());
+			Log.logger.warn(e.getMessage());  
 			
 			return false;
 		} 

@@ -13,8 +13,8 @@ import org.w3c.dom.*;
 
 import Fascade.Fascade;
 import Fascade.IFascade;
-import buisnessLayer.Count;
 import buisnessLayer.IReaderXML;
+import buisnessLayer.Log;
 import buisnessLayer.MutantGenerator;
 import buisnessLayer.ReaderXML;
 import transferObject.*;
@@ -32,7 +32,7 @@ public class WordDAO implements IWordDAO {
 
 
 
-	static Logger logger = Logger.getLogger(WordDAO.class);
+//	static Log.logger Log.logger = Log.logger.getLog.logger(WordDAO.class);
 
 
 	// Insert data into content table ( title , author , content in file )
@@ -54,9 +54,9 @@ public class WordDAO implements IWordDAO {
 
 
 		} catch (SQLException ex) {
-			logger.info("Error in function insertContent in DAL WORDAO");
-			logger.info(ex.getCause());
-			logger.warn(ex.getMessage());
+			Log.logger.info("Error in function insertContent in DAL WORDAO");
+			Log.logger.info(ex.getCause());
+			Log.logger.warn(ex.getMessage());
 		}
 	}
 
@@ -105,9 +105,9 @@ public class WordDAO implements IWordDAO {
 			rs.close();
 
 		} catch (SQLException ex) {
-			logger.info("Error in function insertWords() in DAL WordDAO");
-			logger.info(ex.getCause());
-			logger.warn(ex.getMessage());
+			Log.logger.info("Error in function insertWords() in DAL WordDAO");
+			Log.logger.info(ex.getCause());
+			Log.logger.warn(ex.getMessage());
 		}
 
 		// Remove null words from Map
@@ -118,7 +118,7 @@ public class WordDAO implements IWordDAO {
 		for(String key : words.keySet()) {
 
 
-			Count.num += 1;
+		
 			try {
 				Statement st = DBhandler.getInstance().getConnection().createStatement();
 				if(!word.getWords().containsKey(key) ) {
@@ -135,9 +135,9 @@ public class WordDAO implements IWordDAO {
 			} catch (SQLException e) {
 
 
-				logger.info("Error in function insertWords() in DAL WordDAO");
-				logger.info(e.getCause());
-				logger.warn(e.getMessage());
+				Log.logger.info("Error in function insertWords() in DAL WordDAO");
+				Log.logger.info(e.getCause());
+				Log.logger.warn(e.getMessage());
 			}
 		}
 
@@ -175,9 +175,9 @@ public class WordDAO implements IWordDAO {
 						query = "INSERT INTO `WordReference` (word, FileName, FileID) VALUE ('" + key + "' ,'" + wordForeignKey.get(key) + "', " + titleID + ")";
 						st2.executeUpdate(query);
 					} catch (SQLException ex) {
-						logger.info("Error in function insertWordsRef() in DAL WordDAO");
-						logger.info(ex.getCause());
-						logger.warn(ex.getMessage());
+						Log.logger.info("Error in function insertWordsRef() in DAL WordDAO");
+						Log.logger.info(ex.getCause());
+						Log.logger.warn(ex.getMessage());
 					}
 				}
 				wordForeignKey.clear();
@@ -243,9 +243,9 @@ public class WordDAO implements IWordDAO {
 			}
 
 		} catch (SQLException ex) {
-			logger.info("Error in getting data from Database");
-			logger.info(ex.getCause());
-			logger.warn(ex.getMessage());
+			Log.logger.info("Error in getting data from Database");
+			Log.logger.info(ex.getCause());
+			Log.logger.warn(ex.getMessage());
 		}
 		return words;
 	}
@@ -270,9 +270,9 @@ public class WordDAO implements IWordDAO {
 			}
 
 		} catch (SQLException ex) {
-			logger.info("Error in getting data from database Words");
-			logger.info(ex.getCause());
-			logger.warn(ex.getMessage());
+			Log.logger.info("Error in getting data from database Words");
+			Log.logger.info(ex.getCause());
+			Log.logger.warn(ex.getMessage());
 		}
 		return wordList;
 	}
@@ -301,8 +301,8 @@ public class WordDAO implements IWordDAO {
 
 		} catch (SQLException ex) {
 
-			logger.info(ex.getCause());
-			logger.warn(ex.getMessage());
+			Log.logger.info(ex.getCause());
+			Log.logger.warn(ex.getMessage());
 		}
 
 		return true;
@@ -325,8 +325,8 @@ public class WordDAO implements IWordDAO {
 		} catch (SQLException e) {
 
 
-			logger.info(e.getCause());
-			logger.warn(e.getMessage());
+			Log.logger.info(e.getCause());
+			Log.logger.warn(e.getMessage());
 			return false;
 		}
 
