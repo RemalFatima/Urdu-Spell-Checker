@@ -19,8 +19,6 @@ import javax.swing.text.Utilities;
 
 import org.apache.log4j.Logger;
 
-import Fascade.Fascade;
-import Fascade.IFascade;
 import buisnessLayer.*;
 import dataAccessLayer.*;
 import transferObject.Mutant;

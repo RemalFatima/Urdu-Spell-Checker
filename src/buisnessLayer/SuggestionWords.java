@@ -14,8 +14,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import Fascade.Fascade;
-import Fascade.IFascade;
 import transferObject.Mutant;
 import transferObject.Mutants;
 /*

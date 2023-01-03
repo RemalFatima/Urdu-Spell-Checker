@@ -11,8 +11,6 @@ import java.util.HashMap;
 
 import org.apache.log4j.*;
 
-import Fascade.Fascade;
-import Fascade.IFascade;
 import dataAccessLayer.IWordDAO;
 import dataAccessLayer.WordDAO;
 import transferObject.Words;

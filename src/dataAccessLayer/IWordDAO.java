@@ -14,7 +14,7 @@ public interface IWordDAO {
 	// Author  : Remal Fatima
 	void insertContent(File file);
 
-	HashMap<String, Integer> getWords(String content, String title);
+	Words getWords(String content, String title);
 
 	void insertWords();
 

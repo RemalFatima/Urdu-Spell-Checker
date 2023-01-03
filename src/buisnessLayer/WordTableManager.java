@@ -6,8 +6,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import Fascade.Fascade;
-import Fascade.IFascade;
 import transferObject.wordTableData;
 
 /*

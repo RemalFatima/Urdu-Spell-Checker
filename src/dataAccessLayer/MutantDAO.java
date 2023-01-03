@@ -8,8 +8,8 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
-import Fascade.Fascade;
-import Fascade.IFascade;
+import buisnessLayer.Fascade;
+import buisnessLayer.IFascade;
 import buisnessLayer.IMutantGenerator;
 import buisnessLayer.Log;
 import buisnessLayer.MutantGenerator;

@@ -2,8 +2,6 @@ package buisnessLayer;
 
 import org.apache.log4j.Logger;
 
-import Fascade.Fascade;
-import Fascade.IFascade;
 import dataAccessLayer.IMutantDAO;
 import dataAccessLayer.IWordDAO;
 import dataAccessLayer.MutantDAO;

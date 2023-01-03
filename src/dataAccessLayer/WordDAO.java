@@ -11,8 +11,8 @@ import javax.xml.parsers.*;
 import org.apache.log4j.Logger;
 import org.w3c.dom.*;
 
-import Fascade.Fascade;
-import Fascade.IFascade;
+import buisnessLayer.Fascade;
+import buisnessLayer.IFascade;
 import buisnessLayer.IReaderXML;
 import buisnessLayer.Log;
 import buisnessLayer.MutantGenerator;
@@ -26,7 +26,7 @@ import transferObject.*;
 public class WordDAO implements IWordDAO {
 
 	private IFascade bllFascade;
-	private HashMap<String, Integer> words = new HashMap<String,Integer>();
+	private Words words = new Words();
 	private HashMap<String,String> wordForeignKey = new HashMap<String,String>();
 	private ArrayList<String> content = new ArrayList<String>();
 
@@ -61,16 +61,16 @@ public class WordDAO implements IWordDAO {
 	}
 
 	@Override
-	public HashMap<String, Integer> getWords(String content, String title){
+	public Words getWords(String content, String title){
 
 		// Using split function.
 		for (String word: content.split(" ")) {
-			if(!(words.containsKey(word) || wordForeignKey.containsKey(word))) {
+			if(!(words.getWords().containsKey(word) || wordForeignKey.containsKey(word))) {
 				words.put(word, 1);
 				wordForeignKey.put(word, title);
 			}
 			else
-				words.put(word,words.get(word) + 1);
+				words.put(word,words.getWords().get(word) + 1);
 		}
 
 		return words;
@@ -111,11 +111,11 @@ public class WordDAO implements IWordDAO {
 		}
 
 		// Remove null words from Map
-		words.remove("");
+		words.getWords().remove("");
 		wordForeignKey.remove("");
 		Words word = getAllWords();
 		// insert word if does not exists already else update frquency
-		for(String key : words.keySet()) {
+		for(String key : words.getWords().keySet()) {
 
 
 		
@@ -123,11 +123,11 @@ public class WordDAO implements IWordDAO {
 				Statement st = DBhandler.getInstance().getConnection().createStatement();
 				if(!word.getWords().containsKey(key) ) {
 
-					query = "INSERT INTO `Words` (word, frequency) VALUE ('" + key + "' ," + words.get(key) + ")";
+					query = "INSERT INTO `Words` (word, frequency) VALUE ('" + key + "' ," + words.getWords().get(key) + ")";
 					st.executeUpdate(query);
 				}
 				else {
-					query = "Update Words set frequency = (frequency + " + words.get(key) + ") Where word = '" + key + "'";
+					query = "Update Words set frequency = (frequency + " + words.getWords().get(key) + ") Where word = '" + key + "'";
 					st.executeUpdate(query);
 					System.out.println("update");
 				}
@@ -200,16 +200,10 @@ public class WordDAO implements IWordDAO {
 	public void insertBuiltInData(String path) {
 
 		File folder = new File(path);
-
-
-		// create connection
-
 		// Insert content ( title , author , content in file ) 
 		for ( File file : folder.listFiles()) {
 
 			insertContent(file);
-
-
 		}
 		insertWords();
 		//	insertWordRef();
@@ -249,6 +243,8 @@ public class WordDAO implements IWordDAO {
 		}
 		return words;
 	}
+	
+	
 	@Override
 	public ArrayList<wordTableData> getWordsList() {
 
