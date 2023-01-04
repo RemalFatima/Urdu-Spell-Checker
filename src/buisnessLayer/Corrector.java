@@ -20,9 +20,7 @@ public class Corrector implements ICorrector {
 	//static Log.logger Log.logger = Log.logger.getLog.logger(Corrector.class);
 	IFascade dalFascade ;
 	Words words = new Words();
-	/*
-	 * stores incorrect words into an array list and return that list 
-	 */
+	
 	public ArrayList<String> Incorrectwords(String sentence)
 	{
 		dalFascade = new Fascade();
@@ -43,9 +41,7 @@ public class Corrector implements ICorrector {
 		}
 		return incorrectWords;
 	}
-	/*
-	 * stores correct words into an array list and return that list 
-	 */
+	
 	public ArrayList<String> correctWords(String sentence)
 	{
 		dalFascade = new Fascade();

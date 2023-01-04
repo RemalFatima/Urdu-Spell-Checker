@@ -80,7 +80,7 @@ import java.awt.event.InputMethodEvent;
 
 
 public class Mainscreen extends JFrame {
-	
+
 	static Logger logger = Logger.getLogger(Mainscreen.class);
 
 	private JPanel contentPane;
@@ -98,7 +98,7 @@ public class Mainscreen extends JFrame {
 	private JTextField idField;
 	private JTextField freqField;
 	int row,column;
-	
+
 
 	// Highlight incorrect words from JTextPane by deleting old text and overwriting with new text
 
@@ -167,7 +167,7 @@ public class Mainscreen extends JFrame {
 	 */
 	public Mainscreen() {
 		setTitle("Urdu Spell Checker");
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1211, 719);
 		contentPane = new JPanel();
@@ -201,55 +201,55 @@ public class Mainscreen extends JFrame {
 		});
 		checkBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
 		textArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-        textArea.getDocument().addDocumentListener(new DocumentListener() {
 
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                checkLastWord();
-            }
+		textArea.getDocument().addDocumentListener(new DocumentListener() {
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                checkLastWord();
-            }
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				checkLastWord();
+			}
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                checkLastWord();
-            }
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				checkLastWord();
+			}
 
-            protected void checkLastWord() {
-                try {
-                	if(textArea.getText() != null || textArea.getText() != "") {
-                    int start = Utilities.getWordStart(textArea,textArea.getCaretPosition());
-                    int end = Utilities.getWordEnd(textArea, textArea.getCaretPosition());
-                    String text = textArea.getDocument().getText(start, end - start);
-                  //  System.out.println(text);
-                    ArrayList<String> wordList = suggestions.autoCorrection(text);
-                    if(wordList.size() >= 1)
-                    {
-                    	suggestionTextArea.setText("");
-                    	for(String word : wordList) {
-                    		appendToPane(suggestionTextArea,word+"\n", Color.white);
-                    		//suggestionTextArea.setText(word + "\n");
-                    		
-                    	}
-                    }
-                 
-                	}
-                } catch (Exception e) {
-                 
-                	}
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				checkLastWord();
+			}
 
-            }
-        });
+			protected void checkLastWord() {
+				try {
+					if(textArea.getText() != null || textArea.getText() != "") {
+						int start = Utilities.getWordStart(textArea,textArea.getCaretPosition());
+						int end = Utilities.getWordEnd(textArea, textArea.getCaretPosition());
+						String text = textArea.getDocument().getText(start, end - start);
+						//  System.out.println(text);
+						ArrayList<String> wordList = suggestions.autoCorrection(text);
+						if(wordList.size() >= 1)
+						{
+							suggestionTextArea.setText("");
+							for(String word : wordList) {
+								appendToPane(suggestionTextArea,word+"\n", Color.white);
+								//suggestionTextArea.setText(word + "\n");
+
+							}
+						}
+
+					}
+				} catch (Exception e) {
+
+				}
+
+			}
+		});
 
 
-/*
- * @author: Manal saqib 
- * : modify on click mouse function to show suggestions and replace it with menu 
- */
+		/*
+		 * @author: Manal saqib 
+		 * : modify on click mouse function to show suggestions and replace it with menu 
+		 */
 		textArea.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -265,23 +265,27 @@ public class Mainscreen extends JFrame {
 					suggestionTextArea.setText("");
 					JPopupMenu popupmenu = new JPopupMenu("Words");  
 					if(suggestions.suggestWords(wrd).size() >= 1) {
-					for(Mutant mutant : suggestions.suggestWords(wrd)) {
-						
-						
-						 
-						 JMenuItem suggestedWord = new JMenuItem(mutant.getCorrectWord());
-						 suggestedWord.addActionListener(new ActionListener(){  
-					            public void actionPerformed(ActionEvent e) {    
-					            	String newText = textArea.getText();
-					            	newText = newText.replace(mutant.getMutantString(), suggestedWord.getText());
-					                textArea.setText("");
-					                appendToPane(textArea, newText ,Color.white);
-					            }  
-					           });  
-						 popupmenu.add(suggestedWord);
-						 
-					}
-					popupmenu.show(textArea,e.getX(),e.getY());
+						for(Mutant mutant : suggestions.suggestWords(wrd)) {
+
+
+
+							JMenuItem suggestedWord = new JMenuItem(mutant.getCorrectWord());
+							suggestedWord.addActionListener(new ActionListener(){  
+								public void actionPerformed(ActionEvent e) {    
+									replaceWord(mutant, suggestedWord);
+								}
+
+								public void replaceWord(Mutant mutant, JMenuItem suggestedWord) {
+									String newText = textArea.getText();
+									newText = newText.replace(mutant.getMutantString(), suggestedWord.getText());
+									textArea.setText("");
+									appendToPane(textArea, newText ,Color.white);
+								}  
+							});  
+							popupmenu.add(suggestedWord);
+
+						}
+						popupmenu.show(textArea,e.getX(),e.getY());
 					}
 				}
 				catch(Exception e1)
@@ -323,7 +327,7 @@ public class Mainscreen extends JFrame {
 		suggestionTextArea.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 20));
 		suggestionTextArea.setForeground(new Color(255, 255, 255));
 		suggestionTextArea.setBackground(new Color(0, 0, 72));
-		
+
 		JLabel lblNewLabel_3 = new JLabel("کیا آپ نے یہ لکھنا چاہا؟");
 		lblNewLabel_3.setForeground(Color.WHITE);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -331,7 +335,7 @@ public class Mainscreen extends JFrame {
 		lblNewLabel_3.setBounds(736, 138, 168, 25);
 		spellCheckPanel.add(lblNewLabel_3);
 
-		
+
 
 		suggestionTextArea = new JTextPane();
 		suggestionTextArea.setBounds(734, 182, 165, 459);
@@ -369,7 +373,7 @@ public class Mainscreen extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
+
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
@@ -448,18 +452,18 @@ public class Mainscreen extends JFrame {
 		wordsList.add(scrollPane);
 
 		table = new JTable();
-		
+
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				 row = table.getSelectedRow();
-				 column = table.getSelectedColumn();
-				 if(column == 1) {
-				idField.setText(table.getValueAt(row, 0).toString());
-				wordField.setText( table.getValueAt(row, column).toString());
-				freqField.setText(table.getValueAt(row, 2).toString());
-				 }
-				
+				row = table.getSelectedRow();
+				column = table.getSelectedColumn();
+				if(column == 1) {
+					idField.setText(table.getValueAt(row, 0).toString());
+					wordField.setText( table.getValueAt(row, column).toString());
+					freqField.setText(table.getValueAt(row, 2).toString());
+				}
+
 			}
 		});
 
@@ -473,7 +477,7 @@ public class Mainscreen extends JFrame {
 
 		table.setColumnSelectionAllowed(true);
 
-		
+
 		scrollPane.setViewportView(table);
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		table.setModel(new DefaultTableModel(
@@ -530,21 +534,25 @@ public class Mainscreen extends JFrame {
 		updateBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(editField.getText() != "" && idField.getText() != "" && wordField.getText() != "" && freqField.getText() != "") {
-					
-						IWordTableManager tableManager = new WordTableManager();
-						tableManager.update(Integer.parseInt(idField.getText()), editField.getText(), Integer.parseInt(freqField.getText()));
-						table.setValueAt(editField.getText(), row, column);
-						JOptionPane.showMessageDialog(new JFrame(), "Your request has been submited","Request Change", JOptionPane.INFORMATION_MESSAGE);
-					}
+				if(isUpdateEligible()) {
+
+					IWordTableManager tableManager = new WordTableManager();
+					tableManager.update(Integer.parseInt(idField.getText()), editField.getText(), Integer.parseInt(freqField.getText()));
+					table.setValueAt(editField.getText(), row, column);
+					JOptionPane.showMessageDialog(new JFrame(), "Your request has been submited","Request Change", JOptionPane.INFORMATION_MESSAGE);
+				}
 				else {
 					JOptionPane.showMessageDialog(new JFrame(), "Select a word to update","Updated", JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
+
+			public boolean isUpdateEligible() {
+				return editField.getText() != "" && idField.getText() != "" && wordField.getText() != "" && freqField.getText() != "";
+			}
 		});
-	
-		
+
+
 		updateBtn.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		updateBtn.setBounds(724, 582, 129, 38);
 		wordsList.add(updateBtn);
@@ -657,14 +665,23 @@ public class Mainscreen extends JFrame {
 		wordListBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPane.setSelectedIndex(3);
-				
-				
+
+
 
 
 			}
 		});
+
+
+		loadWordTable();
 		
-		
+		wordListBtn.setForeground(Color.BLACK);
+		wordListBtn.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		wordListBtn.setBackground(Color.LIGHT_GRAY);
+		wordListBtn.setBounds(16, 485, 247, 55);
+		sidePanel.add(wordListBtn);
+	}
+	public void loadWordTable() {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -672,10 +689,5 @@ public class Mainscreen extends JFrame {
 				tableManager.fillTable(table);
 			}
 		}).start();
-		wordListBtn.setForeground(Color.BLACK);
-		wordListBtn.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-		wordListBtn.setBackground(Color.LIGHT_GRAY);
-		wordListBtn.setBounds(16, 485, 247, 55);
-		sidePanel.add(wordListBtn);
 	}
 }

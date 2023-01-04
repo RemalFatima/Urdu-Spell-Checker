@@ -20,7 +20,7 @@ public class DataInserter implements IDataInserter {
 	
 	
 	// Author : Remal Fatima
-	// Calls function to insert data into database
+	
 	public void insertBuiltInData(String path,boolean wordRefEnter) {
 		dalFascade = new Fascade();
 		dalFascade.insertBuiltInData(path);
@@ -36,7 +36,7 @@ public class DataInserter implements IDataInserter {
 	}
 	
 	// Author : Remal Fatima 
-	// Manually add new words by user
+
 	public void insertManualWord(String sentence, String userName)
 	{
 		dalFascade = new Fascade();
@@ -44,7 +44,7 @@ public class DataInserter implements IDataInserter {
 	}
 	
 	// Author : Absar Ali
-	// Create mutants of manually added words
+	
 	
 	public void insertManualMutants(String word)
 	{

@@ -32,6 +32,12 @@ public class SuggestionWords {
 	Mutants mutants ;
 	Words words;
 	public SuggestionWords() {
+		loadWordAndMutant();
+		
+	}
+
+
+	public void loadWordAndMutant() {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -46,7 +52,6 @@ public class SuggestionWords {
 				}
 			}
 		}).start();
-		
 	}
 	
 	
@@ -78,7 +83,7 @@ public class SuggestionWords {
 		if(text.length() > 2) {
 			for(String word : words.getWords().keySet()) {
 
-				if(word.contains(text) && text.length() + 3 >= word.length() && words.getWords().get(word) > 2)
+				if(similarityExists(text, word))
 
 					autoCorrections.add(word);
 					
@@ -90,6 +95,11 @@ public class SuggestionWords {
 			Log.logger.warn(e.getMessage());
 		}
 		return autoCorrections;
+	}
+
+
+	public boolean similarityExists(String text, String word) {
+		return word.contains(text) && text.length() + 3 >= word.length() && words.getWords().get(word) > 2;
 	}
 
 }

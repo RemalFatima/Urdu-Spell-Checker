@@ -19,29 +19,25 @@ import transferObject.Words;
 
 public class MutantGeneratorTests {
 
-	
-	
+
+
 	/*
 	 * Author : Absar Ali 20F-0232
 	 * Test cases for class Mutant Generator
 	 */
+
+
+
 	
-	
-	
-	/*
-	 * 
-	 * Function : generateMutants(Words _wordList)
-	 * 
-	 */
 
 	//When the word have mutants
-	
+
 	MutantGenerator mutantGenerator = new MutantGenerator();
-		
-	
+
+
 	@Test
 	public void generateMutantValidWord() {
-		
+
 		mutantGenerator = new MutantGenerator();
 		Mutants mutant = new Mutants();
 		Words word = new Words();
@@ -57,43 +53,43 @@ public class MutantGeneratorTests {
 			System.out.println(word1.getMutantString());
 		}
 		assertTrue(result.getMutant().containsAll(mutant.getMutant()));
-		
-		
+
+
 	}
-	
+
 	// When word has no possible mutant
 	@Test
 	public void generateMutantInvalidWord() {
-		
-		
+
+
 		Mutants mutant = new Mutants();
 		Words word = new Words();
 		word.put("",5);
 		mutant = mutantGenerator.generateMutants(word);
 		Mutants result = new Mutants();
 		assertEquals(mutant.getMutant(),result.getMutant());
-		
+
 	}
-	
+
 	// When no word is entered in mutant Generator
-		@Test
-		public void generateMutantNoWord() {
-			
-			
-			Mutants mutant = new Mutants();
-			Words word = new Words();
-			mutant = mutantGenerator.generateMutants(word);
-			Mutants result = new Mutants();
-			assertEquals(mutant.getMutant(),result.getMutant());
-			
-		}
-	
-	
-	
+	@Test
+	public void generateMutantNoWord() {
+
+
+		Mutants mutant = new Mutants();
+		Words word = new Words();
+		mutant = mutantGenerator.generateMutants(word);
+		Mutants result = new Mutants();
+		assertEquals(mutant.getMutant(),result.getMutant());
+
+	}
+
+
+
 	@Test
 	@DisplayName (" Testing replaceCharacters function for groups which changes 1 character at a time ") 
 	public void testReplaceCharactersForSingleCharacter() {
-		
+
 		String word = "عام";
 		String mutant = word;
 		String[] group1List = {"ا","ع","آ"};
@@ -107,5 +103,33 @@ public class MutantGeneratorTests {
 		assertEquals(map1, map2);
 	}
 
+
+	@Test
+	@DisplayName (" Testing how many mutants should be generated") 
+	public void testApplyMutation() {
+
+		Words word = new Words();
+		word.put("ا", 1);
+		mutantGenerator.applyMutation(word);
+		Mutants expected = new Mutants();
+
+		assertTrue(mutantGenerator.getMutants().getMutant().size() == 2);
+
+	}
 	
+	
+	@Test
+	@DisplayName (" Testing how many mutants should be generated") 
+	public void testApplyMutationWithNull() {
+
+		Words word = new Words();
+		word.put("", 1);
+		mutantGenerator.applyMutation(word);
+		Mutants expected = new Mutants();
+
+		assertTrue(mutantGenerator.getMutants().getMutant().size() == 0);
+
+	}
+
+
 }

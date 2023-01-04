@@ -15,7 +15,7 @@ import transferObject.wordTableData;
 
 public class WordTableManager implements IWordTableManager {
 
-	// fills data in table from database
+	
 	@Override
 	public void fillTable(JTable table ) {
 		IFascade bllFascade = new Fascade();
@@ -30,7 +30,7 @@ public class WordTableManager implements IWordTableManager {
 		
 	}
 	
-	// updates data in database
+	
 	@Override
 	public boolean update(int id, String word, int frequency) {
 		try {

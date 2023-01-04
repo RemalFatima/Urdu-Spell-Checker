@@ -29,11 +29,7 @@ public class MutantDAO implements IMutantDAO {
 	private IFascade bllFascade;
 	//static Log.logger Log.logger = Log.logger.getLog.logger(MutantDAO.class);
 
-	/*
-	 * Function to insert mutant into database
-	 */
-
-	// insert mutants for builtin words
+	
 	@Override
 	public void insertBuiltInMutants() {
 
@@ -66,8 +62,7 @@ public class MutantDAO implements IMutantDAO {
 		}
 	}
 
-	// generate mutants for manually added words
-
+	
 	@Override
 	public boolean manualWordMutant(String word)
 	{
@@ -96,7 +91,7 @@ public class MutantDAO implements IMutantDAO {
 		return true;
 	}
 
-	// Get all mutants from database
+	
 	@Override
 	public Mutants getAllMutants() {
 

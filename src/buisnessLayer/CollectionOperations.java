@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class CollectionOperations {
 	
-	// checks if one map is a subset of other
+	
 	public boolean containsAll(HashMap<String , String> map1, HashMap<String , String> map2) {
 
 		if(map1.keySet().containsAll(map2.keySet()))
@@ -18,7 +18,7 @@ public class CollectionOperations {
 		return false;
 	}
 	
-	// check if one there is intersection between maps
+	
 	public HashMap<String,String> uniqueElements(HashMap<String,String> map1, HashMap<String,String> map2)
 	{
 		HashMap<String,String> newList = new HashMap<String,String>();

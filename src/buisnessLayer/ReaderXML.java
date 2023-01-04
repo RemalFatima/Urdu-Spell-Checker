@@ -24,7 +24,7 @@ public class ReaderXML implements IReaderXML {
 	//static Logger logger = Logger.getLogger(ReaderXML.class);
 
 
-	// Reading XML File
+	
 	@Override
 	public boolean readFile(File file)
 	{
@@ -45,7 +45,7 @@ public class ReaderXML implements IReaderXML {
 			
 			Element cElement = (Element) doc.getElementsByTagName("section").item(0);
 	
-			// assigning value in tags to variables
+			
 			title =  tElement.getTextContent(); 
 			if(tElement != null){
 				title = title.replaceAll("(?U)[\\W_]+", " "); // Removing Punctuation marks
@@ -84,7 +84,7 @@ public class ReaderXML implements IReaderXML {
 	}
 	
 	 
-	// Return content
+	
 	@Override
 	public Content getContent() {
 		Content content = new Content();

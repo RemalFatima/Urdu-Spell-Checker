@@ -88,7 +88,15 @@ public class MutantGenerator implements IMutantGenerator {
 
 	}
 
-	// replace characters to create new mutants
+	public Mutants getMutants() {
+		return mutants;
+	}
+
+	public void setMutants(Mutants mutants) {
+		this.mutants = mutants;
+	}
+
+	
 	public HashMap<String , String> replaceCharacters( int index, String mutant, String word, ArrayList<String> group) {
 		HashMap<String , String> mutantList = new HashMap<String,String>();
 
@@ -141,12 +149,7 @@ public class MutantGenerator implements IMutantGenerator {
 		return mutantList;
 	}
 
-	/**
-	 * @param word
-	 * @param mutantList
-	 * @param strBuilder
-	 * @return
-	 */
+	
 	private String addMutantToMap(String word, HashMap<String, String> mutantList, StringBuilder strBuilder) {
 		String mutant;
 		mutant = strBuilder.toString();
@@ -155,7 +158,7 @@ public class MutantGenerator implements IMutantGenerator {
 	}
 
 
-	// Calls change character at each index of string to create new mutants
+	
 	public void createMutant(String temp,String word)
 	{
 
@@ -244,12 +247,8 @@ public class MutantGenerator implements IMutantGenerator {
 
 	}
 
-	/**
-	 * @param word
-	 * @param newList
-	 * add each unique mutant to the map
-	 */
-	private void updateList(String word, HashMap<String, String> newList) {
+	
+	public void updateList(String word, HashMap<String, String> newList) {
 		if(!collectionOperation.containsAll(mutantList,newList)) {
 			newList = collectionOperation.uniqueElements(mutantList,newList);
 			mutantList.putAll(newList);
@@ -259,19 +258,14 @@ public class MutantGenerator implements IMutantGenerator {
 		}
 	}
 
-	// get Mutants from word
-	private HashMap<String, String> createNewList(String temp, String word, int i, ArrayList<String> group) {
+	
+	public HashMap<String, String> createNewList(String temp, String word, int i, ArrayList<String> group) {
 		HashMap<String,String> newList = new HashMap<String,String>();
 		newList = replaceCharacters(i,temp,word,group);
 		return newList;
 	}
 
-	/**
-	 * @param temp
-	 * @param i
-	 * @return
-	 * check groups
-	 */
+	
 	private boolean isGroup1(String temp, int i) {
 		return temp.charAt(i) == 'ا' || temp.charAt(i) == 'ع' || temp.charAt(i) == 'آ';
 	}
@@ -341,7 +335,7 @@ public class MutantGenerator implements IMutantGenerator {
 				Log.logger.info("Failed to create mutant in function applyMutation() in BLL MutantGenerator");
 				Log.logger.warn(e.getMessage());
 			}
-
+			mutantList.remove(word);
 			for(String key : mutantList.keySet()) {
 
 				if(!mutants.containsMutant(key, word)) 

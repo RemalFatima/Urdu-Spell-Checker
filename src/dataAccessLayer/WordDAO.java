@@ -35,20 +35,20 @@ public class WordDAO implements IWordDAO {
 //	static Log.logger Log.logger = Log.logger.getLog.logger(WordDAO.class);
 
 
-	// Insert data into content table ( title , author , content in file )
+	
 	// Author  : Remal Fatima
 	@Override
 	public void insertContent(File file) {
 		bllFascade = new Fascade();
-		// Read File
+		
 		bllFascade.readFile(file);
-		// Get content from file
+		
 		Content contents = bllFascade.getContent();
-		// query
+		
 		String query = "INSERT INTO `Content` (Title, Author, content) VALUE ('" + contents.getTitle() + "' ,'" + contents.getAuthor() + "','" + contents.getContent() + "')";
 
 		try {
-			// execute query
+			
 			Statement st =DBhandler.getInstance().getConnection().createStatement();
 			st.executeUpdate(query);
 
@@ -63,7 +63,7 @@ public class WordDAO implements IWordDAO {
 	@Override
 	public Words getWords(String content, String title){
 
-		// Using split function.
+		
 		for (String word: content.split(" ")) {
 			if(!(words.getWords().containsKey(word) || wordForeignKey.containsKey(word))) {
 				words.put(word, 1);
@@ -79,7 +79,7 @@ public class WordDAO implements IWordDAO {
 
 
 	// Author  : Remal Fatima
-	// Insert word into Words table ( word , frequency , title of file where found first )
+	
 
 	@Override
 	public void insertWords() {
@@ -194,13 +194,13 @@ public class WordDAO implements IWordDAO {
 
 	// Author  : Remal Fatima
 	// Insert Both content and words into database
-	// Arguements take path of folder where file is located
+	
 
 	@Override
 	public void insertBuiltInData(String path) {
 
 		File folder = new File(path);
-		// Insert content ( title , author , content in file ) 
+		
 		for ( File file : folder.listFiles()) {
 
 			insertContent(file);
@@ -224,7 +224,7 @@ public class WordDAO implements IWordDAO {
 
 		Words words = new Words();
 
-		// Read words from database
+		
 		try {
 
 			Statement st = DBhandler.getInstance().getConnection().createStatement();
@@ -252,7 +252,7 @@ public class WordDAO implements IWordDAO {
 
 		ArrayList<wordTableData> wordList = new ArrayList<wordTableData>();
 
-		// Read words from database
+		
 		try {
 
 			Statement st = DBhandler.getInstance().getConnection().createStatement();
@@ -282,9 +282,9 @@ public class WordDAO implements IWordDAO {
 
 		String query = "INSERT INTO `Words` (word, frequency) VALUE ('" + word + "' ," + 1 + ")";
 
-		// insert new word into Words & WordReference Table
+		
 		try {
-			// execute query
+			
 
 			Statement st = DBhandler.getInstance().getConnection().createStatement();
 			st.executeUpdate(query);
